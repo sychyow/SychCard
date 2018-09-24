@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SychCard</string>
+    <string name="photo_desc">Nice photo</string>
+    <string name="first_deed">Programmer</string>
+</resources>

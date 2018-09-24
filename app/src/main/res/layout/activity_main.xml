@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginBottom="16dp"
+        android:background="?android:attr/colorBackground"
+        android:contentDescription="@string/photo_desc"
+        app:srcCompat="@drawable/sych" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/language_java"
+        android:paddingStart="12dp"
+        android:text="@string/first_deed" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/camera"
+        android:paddingStart="12dp"
+        android:text="Photographer" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/stove"
+        android:paddingStart="12dp"
+        android:text="Chef" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:background="?android:attr/listDivider"
+        android:paddingStart="12dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:paddingStart="12dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend quis urna ut luctus. In eu scelerisque ligula. Nunc lacinia mauris vel sagittis rhoncus. Ut suscipit tincidunt feugiat. Proin eget ex non sem maximus aliquam ac et ligula. Fusce a purus pellentesque, finibus ligula a, consectetur lorem. Fusce ut bibendum lacus." />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
+        android:background="?android:attr/listDivider"
+        android:paddingStart="12dp" />
+
+</LinearLayout>
