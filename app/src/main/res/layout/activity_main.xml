@@ -13,8 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
+        android:adjustViewBounds="false"
         android:background="?android:attr/colorBackground"
         android:contentDescription="@string/photo_desc"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/sych" />
 
     <TextView
