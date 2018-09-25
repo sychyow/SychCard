@@ -2,7 +2,7 @@
     <string name="app_name">SychCard</string>
     <string name="photo_desc">Nice photo</string>
     <string name="spec_first">Programmer</string>
-    <string name="mail_recipient">sychyow@outlook.com</string>
+    <string name="mail_recipient" translatable="false">sychyow@outlook.com</string>
     <string name="mail_subject">Mail from card app</string>
     <string name="spec_second">Photographer</string>
     <string name="spec_third">Chef</string>
