@@ -1,5 +1,6 @@
 package org.supremus.sych.sychcard;
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         TextView cp = new TextView(this);
         cp.setText("© Dmitri Sychyow, 2018");
         cp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        cp.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+        cp.setTextColor(Color.LTGRAY);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
