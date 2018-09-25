@@ -10,7 +10,6 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:background="?android:attr/colorBackground"
         android:contentDescription="@string/photo_desc"
@@ -33,12 +32,13 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/language_java"
-                android:paddingStart="12dp"
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding"
                 android:text="@string/first_deed"
                 android:textSize="@dimen/text_size" />
 
@@ -46,12 +46,13 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/camera"
-                android:paddingStart="12dp"
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding"
                 android:text="Photographer"
                 android:textSize="@dimen/text_size" />
 
@@ -59,12 +60,13 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/stove"
-                android:paddingStart="12dp"
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding"
                 android:text="Chef"
                 android:textSize="@dimen/text_size" />
 
@@ -72,19 +74,20 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:background="?android:attr/listDivider"
-                android:paddingStart="12dp" />
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:paddingEnd="6dp"
                 android:paddingStart="12dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend quis urna ut luctus. In eu scelerisque ligula. Nunc lacinia mauris vel sagittis rhoncus. Ut suscipit tincidunt feugiat. Proin eget ex non sem maximus aliquam ac et ligula. Fusce a purus pellentesque, finibus ligula a, consectetur lorem. Fusce ut bibendum lacus."
@@ -94,31 +97,35 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:background="?android:attr/listDivider"
-                android:paddingStart="12dp" />
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding" />
 
             <EditText
                 android:id="@+id/et_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:ems="10"
                 android:hint="Enter your message"
                 android:inputType="text"
-                android:paddingStart="12dp" />
+                android:paddingEnd="@dimen/text_padding"
+                android:paddingStart="@dimen/text_padding" />
 
             <Button
                 android:id="@+id/btn_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginStart="@dimen/base_margin"
                 android:background="?android:attr/selectableItemBackground"
-                android:gravity="right|center_vertical"
+                android:gravity="center_vertical|end"
                 android:text="send message" />
 
         </LinearLayout>
