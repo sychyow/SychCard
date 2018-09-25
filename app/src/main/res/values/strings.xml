@@ -2,4 +2,6 @@
     <string name="app_name">SychCard</string>
     <string name="photo_desc">Nice photo</string>
     <string name="first_deed">Programmer</string>
+    <string name="mail_recipient">sychyow@outlook.com</string>
+    <string name="mail_subject">Mail from card app</string>
 </resources>
