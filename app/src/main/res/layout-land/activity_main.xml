@@ -120,11 +120,12 @@
 
             <Button
                 android:id="@+id/btn_send"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/bottom_margin"
-                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_gravity="end"
                 android:layout_marginStart="@dimen/base_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:layout_marginBottom="@dimen/bottom_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical|end"
                 android:text="@string/send_mail" />

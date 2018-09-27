@@ -11,4 +11,6 @@
     <string name="send_mail">send message</string>
     <string name="full_name">Dmitry Sychyow</string>
     <string name="copyright">© Dmitri Sychyow, 2018</string>
+    <string name="no_mail">Mail app not available</string>
+    <string name="empty_message">Enter the message first</string>
 </resources>

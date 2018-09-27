@@ -41,13 +41,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (!ms.hasActivity()) {
-            Snackbar.make(v,"Mail app not available", Snackbar.LENGTH_SHORT)
+        EditText etMessage = findViewById(R.id.et_message);
+        String message = etMessage.getText().toString();
+        if (message.length()==0) {
+            Snackbar.make(v,getString(R.string.empty_message), Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
             return;
         }
-        EditText etMessage = findViewById(R.id.et_message);
-        Intent mailIntent = ms.getSendIntent(etMessage.getText().toString());
+        if (!ms.hasActivity()) {
+            Snackbar.make(v,getString(R.string.no_mail), Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        Intent mailIntent = ms.getSendIntent(message);
         startActivity(mailIntent);
     }
 }
