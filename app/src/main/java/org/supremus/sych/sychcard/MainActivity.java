@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    MailSender ms;
+    private MailSender ms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView cp = new TextView(this);
-        cp.setText("© Dmitri Sychyow, 2018");
+        cp.setText(R.string.copyright);
         cp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         cp.setTextColor(Color.LTGRAY);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,

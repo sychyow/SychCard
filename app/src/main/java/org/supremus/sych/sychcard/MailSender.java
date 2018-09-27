@@ -11,8 +11,7 @@ class MailSender {
 
     MailSender(Context context) {
         mailIntent = new Intent(Intent.ACTION_SENDTO);
-        mailIntent.setType("text/plain");
-        mailIntent.setData(Uri.parse(String.format("mailto:%s", context.getString(R.string.mail_recipient))));
+        mailIntent.setDataAndType(Uri.parse(String.format("mailto:%s", context.getString(R.string.mail_recipient))), "text/plain");
         mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {context.getString(R.string.mail_recipient)});
         mailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.mail_subject));
         mailName = mailIntent.resolveActivity(context.getPackageManager());

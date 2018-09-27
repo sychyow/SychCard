@@ -115,7 +115,8 @@
                 android:hint="@string/message_tip"
                 android:inputType="text"
                 android:paddingEnd="@dimen/text_padding"
-                android:paddingStart="@dimen/text_padding" />
+                android:paddingStart="@dimen/text_padding"
+                tools:ignore="Autofill" />
 
             <Button
                 android:id="@+id/btn_send"
