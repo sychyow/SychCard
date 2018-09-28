@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SychCard</string>
+    <string name="app_name">Sych News</string>
     <string name="photo_desc">Nice photo</string>
     <string name="spec_first">Programmer</string>
     <string name="mail_recipient" translatable="false">sychyow@outlook.com</string>

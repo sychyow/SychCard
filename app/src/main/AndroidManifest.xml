@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.supremus.sych.sychcard">
+    package="org.supremus.sych.sychnews">
 
     <application
         android:allowBackup="true"
@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AboutActivity"
+            android:name="org.supremus.sych.sychnews.AboutActivity"
             android:label="@string/full_name">
         </activity>
-        <activity android:name=".NewsListActivity">
+        <activity android:name="org.supremus.sych.sychnews.NewsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,5 +21,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SychCard</string>
+    <string name="app_name">Sych News</string>
     <string name="photo_desc">Фоточка</string>
     <string name="mail_subject">Сообщение из СычКарты</string>
     <string name="spec_second">Фотограф</string>

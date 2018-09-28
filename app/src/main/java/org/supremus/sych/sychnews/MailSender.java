@@ -1,4 +1,4 @@
-package org.supremus.sych.sychcard;
+package org.supremus.sych.sychnews;
 
 import android.content.ComponentName;
 import android.content.Context;

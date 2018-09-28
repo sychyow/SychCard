@@ -1,10 +1,9 @@
-package org.supremus.sych.sychcard;
+package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class NewsListActivity extends AppCompatActivity {
