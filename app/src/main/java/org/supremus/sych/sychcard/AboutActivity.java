@@ -1,5 +1,6 @@
 package org.supremus.sych.sychcard;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,14 +15,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MailSender ms;
+    private static Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_about);
         TextView cp = new TextView(this);
         cp.setText(R.string.copyright);
         cp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
@@ -56,5 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent mailIntent = ms.getSendIntent(message);
         startActivity(mailIntent);
+    }
+
+    public static void launch(Activity parent) {
+        if (intent == null) intent = new Intent(parent, AboutActivity.class);
+        parent.startActivity(intent);
     }
 }
