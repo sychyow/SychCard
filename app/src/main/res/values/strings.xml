@@ -6,7 +6,7 @@
     <string name="mail_subject">Mail from card app</string>
     <string name="spec_second">Photographer</string>
     <string name="spec_third">Chef</string>
-    <string name="curriculim_vitae">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend quis urna ut luctus. In eu scelerisque ligula. Nunc lacinia mauris vel sagittis rhoncus. Ut suscipit tincidunt feugiat. Proin eget ex non sem maximus aliquam ac et ligula. Fusce a purus pellentesque, finibus ligula a, consectetur lorem. Fusce ut bibendum lacus.</string>
+    <string name="curriculum_vitae">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend quis urna ut luctus. In eu scelerisque ligula. Nunc lacinia mauris vel sagittis rhoncus. Ut suscipit tincidunt feugiat. Proin eget ex non sem maximus aliquam ac et ligula. Fusce a purus pellentesque, finibus ligula a, consectetur lorem. Fusce ut bibendum lacus.</string>
     <string name="message_tip">Enter your message</string>
     <string name="send_mail">send message</string>
     <string name="full_name">Dmitry Sychyow</string>

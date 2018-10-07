@@ -91,7 +91,7 @@
                 android:layout_weight="1"
                 android:paddingStart="@dimen/text_padding"
                 android:paddingEnd="@dimen/text_padding"
-                android:text="@string/curriculim_vitae"
+                android:text="@string/curriculum_vitae"
                 android:textSize="@dimen/text_size" />
 
             <View

@@ -90,7 +90,7 @@
                 android:layout_marginStart="@dimen/base_margin"
                 android:paddingEnd="6dp"
                 android:paddingStart="12dp"
-                android:text="@string/curriculim_vitae"
+                android:text="@string/curriculum_vitae"
                 android:textSize="@dimen/text_size" />
 
             <View
