@@ -8,12 +8,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Sych.News.Theme">
         <activity
             android:name="org.supremus.sych.sychnews.AboutActivity"
             android:label="@string/full_name">
         </activity>
-        <activity android:name="org.supremus.sych.sychnews.NewsListActivity">
+        <activity android:name="org.supremus.sych.sychnews.NewsListActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
