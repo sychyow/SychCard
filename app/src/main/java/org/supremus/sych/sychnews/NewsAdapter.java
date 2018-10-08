@@ -8,9 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.DateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +27,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Category;
-        ImageView Image;
+        final TextView Category;
+        final ImageView Image;
         TextView Header;
         TextView Preview;
         TextView Timestamp;
@@ -43,7 +41,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
             Timestamp= itemView.findViewById(R.id.tv_timestamp);
         }
 
-        public void bind(NewsItem item) {
+        void bind(NewsItem item) {
             Category.setText(item.getCategory().getName());
             Header.setText(item.getTitle());
             Preview.setText(item.getPreviewText());

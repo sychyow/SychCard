@@ -1,6 +1,5 @@
 package org.supremus.sych.sychnews;
 
-import android.view.View;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -10,7 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-public class DataUtils {
+class DataUtils {
 
     public static List<NewsItem> generateNews() {
         final Category darwinAwards = new Category(1, "Darwin Awards");

@@ -2,7 +2,6 @@ package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +13,13 @@ import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends AppCompatActivity {
     private static Intent intent = null;
-    private static String EXTRA_ITEM = "EXTRA_ITEM";
-    private NewsItem newsItem;
+    private static final String EXTRA_ITEM = "EXTRA_ITEM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-        newsItem = getIntent().<NewsItem>getParcelableExtra(EXTRA_ITEM);
+        NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);
         setTitle(newsItem.getCategory().getName());
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();

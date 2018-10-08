@@ -7,8 +7,8 @@ import android.net.Uri;
 
 class MailSender {
     private final Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
-    private ComponentName mailName = null;
-    private static String MAIL_TYPE = "text/plain";
+    private final ComponentName mailName;
+    private static final String MAIL_TYPE = "message/rfc822";
 
     MailSender(Context context) {
         mailIntent.setType(MAIL_TYPE);

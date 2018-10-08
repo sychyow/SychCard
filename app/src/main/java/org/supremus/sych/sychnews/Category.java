@@ -20,7 +20,7 @@ public class Category implements Parcelable {
         return name;
     }
 
-    protected Category(Parcel in) {
+    Category(Parcel in) {
         id = in.readInt();
         name = in.readString();
     }

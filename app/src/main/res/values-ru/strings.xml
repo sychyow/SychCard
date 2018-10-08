@@ -15,4 +15,5 @@
     <string name="no_mail">Приложение почты недоступно</string>
     <string name="empty_message">Сначала напишите сообщение</string>
     <string name="menu_about">О программе</string>
+    <string name="image_desc">Иллюстрация</string>
 </resources>
