@@ -11,6 +11,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,7 +27,10 @@ public class NewsListActivity extends AppCompatActivity {
             LinearLayoutManager llm = new LinearLayoutManager(this);
             rv.setLayoutManager(llm);
         } else {
-            GridLayoutManager glm = new GridLayoutManager(this, 2);
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            float dhWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int colNum = (int) Math.floor(dhWidth / 300.0);
+            GridLayoutManager glm = new GridLayoutManager(this, colNum);
             rv.setLayoutManager(glm);
         }
         NewsAdapter na = new NewsAdapter();
