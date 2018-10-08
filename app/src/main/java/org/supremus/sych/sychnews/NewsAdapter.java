@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
     private static final String TAG = "SychNews.NewsAdapter";
 
+    private static final  int VIEW_STANDARD = 1;
+    private static final  int VIEW_ALTERNATIVE = 2;
+
     @Override
     public void onClick(View v) {
         RecyclerView rv = (RecyclerView) v.getParent();
@@ -58,8 +61,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_item, parent, false);
+        View v;
+        switch (viewType) {
+            case VIEW_STANDARD:
+                v=LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.news_item, parent, false);
+                break;
+            case VIEW_ALTERNATIVE:
+                v=LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.news_item_alt, parent, false);
+                break;
+                default: return null;
+        }
         v.setOnClickListener(this);
         return new ViewHolder(v);
     }
@@ -73,6 +86,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public int getItemViewType(int pos) {
+        Category c = data.get(pos).getCategory();
+        switch (c.getId()) {
+            case 2: return VIEW_ALTERNATIVE;
+        }
+        return VIEW_STANDARD;
     }
 
 }
