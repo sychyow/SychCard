@@ -29,7 +29,6 @@ public class NewsListActivity extends AppCompatActivity {
             GridLayoutManager glm = new GridLayoutManager(this, 2);
             rv.setLayoutManager(glm);
         }
-
         NewsAdapter na = new NewsAdapter();
         rv.setAdapter(na);
         rv.setHasFixedSize(true);

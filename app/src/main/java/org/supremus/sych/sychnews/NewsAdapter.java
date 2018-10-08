@@ -15,10 +15,17 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
     private static final String TAG = "SychNews.NewsAdapter";
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onClick(View v) {
+        RecyclerView rv = (RecyclerView) v.getParent();
+        int pos = rv.getChildLayoutPosition(v);
+        NewsDetailActivity.launch(rv.getContext(), data.get(pos));
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category;
         ImageView Image;
         TextView Preview;
@@ -29,6 +36,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             Image = itemView.findViewById(R.id.iv_image);
             Preview = itemView.findViewById(R.id.tv_preview);
             Timestamp= itemView.findViewById(R.id.tv_timestamp);
+        }
+
+        public void bind(NewsItem item) {
+            Category.setText(item.getCategory().getName());
+            Preview.setText(item.getPreviewText());
+            Locale loc = Timestamp.getResources().getConfiguration().getLocales().get(0);
+            DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
+            Timestamp.setText(df.format(item.getPublishDate()));
+            Glide.with(itemView).load(item.getImageUrl()).into(Image);
         }
     }
 
@@ -43,18 +59,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.news_item, parent, false);
+        v.setOnClickListener(this);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsItem item = data.get(position);
-        holder.Category.setText(item.getCategory().getName());
-        holder.Preview.setText(item.getPreviewText());
-        Locale loc = holder.Timestamp.getResources().getConfiguration().getLocales().get(0);
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
-        holder.Timestamp.setText(df.format(item.getPublishDate()));
-        Glide.with(holder.itemView).load(item.getImageUrl()).into(holder.Image);
+        holder.bind(item);
     }
 
     @Override

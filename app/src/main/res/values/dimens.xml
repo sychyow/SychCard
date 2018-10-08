@@ -4,4 +4,6 @@
     <dimen name="base_margin">28dp</dimen>
     <dimen name="bottom_margin">16dp</dimen>
     <dimen name="text_padding">12dp</dimen>
+    <dimen name="text_header_size">24sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
 </resources>
