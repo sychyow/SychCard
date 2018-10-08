@@ -28,18 +28,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category;
         ImageView Image;
+        TextView Header;
         TextView Preview;
         TextView Timestamp;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.tv_category);
             Image = itemView.findViewById(R.id.iv_image);
+            Header = itemView.findViewById(R.id.tv_header);
             Preview = itemView.findViewById(R.id.tv_preview);
             Timestamp= itemView.findViewById(R.id.tv_timestamp);
         }
 
         public void bind(NewsItem item) {
             Category.setText(item.getCategory().getName());
+            Header.setText(item.getTitle());
             Preview.setText(item.getPreviewText());
             Locale loc = Timestamp.getResources().getConfiguration().getLocales().get(0);
             DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
