@@ -44,9 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
             Category.setText(item.getCategory().getName());
             Header.setText(item.getTitle());
             Preview.setText(item.getPreviewText());
-            Locale loc = Timestamp.getResources().getConfiguration().getLocales().get(0);
-            DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
-            Timestamp.setText(df.format(item.getPublishDate()));
+            DataUtils.setDateString(Timestamp, item.getPublishDate());
             Glide.with(itemView).load(item.getImageUrl()).into(Image);
         }
     }

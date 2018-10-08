@@ -32,11 +32,9 @@ public class NewsDetailActivity extends AppCompatActivity {
         TextView header = findViewById(R.id.tv_news_header);
         header.setText(newsItem.getTitle());
         TextView timestamp = findViewById(R.id.tv_news_timestamp);
-        timestamp.setText(newsItem.getPublishDate().toString());
+        DataUtils.setDateString(timestamp, newsItem.getPublishDate());
         TextView fullText = findViewById(R.id.tv_news_text);
         fullText.setText(newsItem.getFullText());
-
-
     }
 
     public static void launch(Context parent, NewsItem item) {

@@ -1,9 +1,14 @@
 package org.supremus.sych.sychnews;
 
+import android.view.View;
+import android.widget.TextView;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 public class DataUtils {
 
@@ -137,5 +142,11 @@ public class DataUtils {
 
     private static Date createDate(int year, int month, int date, int hrs, int min) {
         return new GregorianCalendar(year, month - 1, date, hrs, min).getTime();
+    }
+
+    public static void setDateString(TextView tv, Date d) {
+        Locale loc = tv.getResources().getConfiguration().getLocales().get(0);
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
+        tv.setText(df.format(d));
     }
 }
