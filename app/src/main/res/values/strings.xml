@@ -13,4 +13,5 @@
     <string name="copyright">© Dmitri Sychyow, 2018</string>
     <string name="no_mail">Mail app not available</string>
     <string name="empty_message">Enter the message first</string>
+    <string name="menu_about">About</string>
 </resources>

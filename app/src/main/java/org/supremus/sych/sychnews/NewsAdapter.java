@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +51,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         NewsItem item = data.get(position);
         holder.Category.setText(item.getCategory().getName());
         holder.Preview.setText(item.getPreviewText());
-        holder.Timestamp.setText(item.getPublishDate().toString());
+        Locale loc = holder.Timestamp.getResources().getConfiguration().getLocales().get(0);
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
+        holder.Timestamp.setText(df.format(item.getPublishDate()));
         Glide.with(holder.itemView).load(item.getImageUrl()).into(holder.Image);
     }
 

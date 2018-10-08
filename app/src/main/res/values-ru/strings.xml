@@ -14,4 +14,5 @@
     <string name="copyright">© Дмитрий Сычёв, 2018</string>
     <string name="no_mail">Приложение почты недоступно</string>
     <string name="empty_message">Сначала напишите сообщение</string>
+    <string name="menu_about">О программе</string>
 </resources>
