@@ -13,6 +13,7 @@
         android:theme="@style/Sych.News.Theme">
         <activity
             android:name=".AboutActivity"
+            android:theme="@style/Sych.News.Theme.NoBar"
             android:label="@string/full_name" />
         <activity android:name=".NewsListActivity"
             android:theme="@style/Sych.News.Theme.NoBar">

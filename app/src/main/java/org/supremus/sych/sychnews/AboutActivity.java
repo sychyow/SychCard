@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 import android.util.TypedValue;
@@ -24,6 +26,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        Toolbar tb = findViewById(R.id.sych_toolbar);
+        setSupportActionBar(tb);
         TextView cp = new TextView(this);
         cp.setText(R.string.copyright);
         cp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
