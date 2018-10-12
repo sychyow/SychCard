@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsDetailActivity" />
+        <activity android:name=".NewsDetailActivity"
+                  android:theme="@style/Sych.News.Theme.NoBar" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,8 @@ public class NewsDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+        Toolbar tb = findViewById(R.id.sych_toolbar);
+        setSupportActionBar(tb);
         NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);
         setTitle(newsItem.getCategory().getName());
 
