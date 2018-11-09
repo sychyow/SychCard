@@ -156,11 +156,10 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 if (response.code()==200) {
                     data = NewsExtractor.extract(response.body());
                 } else {
-                    showError("Server error: " + response.toString());
+                    showError(SychApp.SYCHCONTEXT.getString(R.string.error_server) + response.toString());
                 }
             } catch (IOException e) {
-                System.out.print("Network error: ");
-                showError("Network error: " + e.getLocalizedMessage());
+                showError(SychApp.SYCHCONTEXT.getString(R.string.error_network) + e.getLocalizedMessage());
                 return null;
             }
             setData(data);

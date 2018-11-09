@@ -16,4 +16,6 @@
     <string name="menu_about">About</string>
     <string name="image_desc">Illustration</string>
     <string name="retry">Retry</string>
+    <string name="error_server">Server error:</string>
+    <string name="error_network">Network error:</string>
 </resources>

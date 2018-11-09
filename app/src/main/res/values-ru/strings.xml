@@ -17,4 +17,6 @@
     <string name="menu_about">О программе</string>
     <string name="image_desc">Иллюстрация</string>
     <string name="retry">Повторить</string>
+    <string name="error_server">"Ошибка сервера: "</string>
+    <string name="error_network">"Ошибка сети: "</string>
 </resources>
