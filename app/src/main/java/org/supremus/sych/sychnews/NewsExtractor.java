@@ -17,7 +17,7 @@ public final class NewsExtractor {
     public static List<NewsItem> extract(FeedDTO feed) {
         List<NewsItem> news = new ArrayList<NewsItem>();
         for (ResultDTO res:feed.getResults()){
-            NewsItem item = new NewsItem(res.getTitle(), getImageUrl(res), new Category(1,res.getSection()),
+            NewsItem item = new NewsItem(res.getTitle(), getImageUrl(res), new Category(1,res.getSubsection()),
                     res.getPublishedDate(), res.getAbstract(), res.getUrl());
             news.add(item);
         }
