@@ -108,11 +108,11 @@ public class NewsListActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Object[] objects) {
             NewsAdapter na = new NewsAdapter();
-            try {
+            /*try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             NewsListActivity activity = nla.get();
             if (activity!=null) {
                 PBOff runner = activity.getPBOff(PBOff.MODE_RV);

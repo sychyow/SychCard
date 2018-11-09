@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +50,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
             Header.setText(item.getTitle());
             Preview.setText(item.getPreviewText());
             DataUtils.setDateString(Timestamp, item.getPublishDate());
-            Glide.with(itemView).load(item.getImageUrl()).into(Image);
+            Glide.with(itemView)
+                    .load(item.getImageUrl())
+                    .apply(new RequestOptions()
+                            .error(R.drawable.nytlogo)
+                            .placeholder(R.drawable.nytlogo)
+                            .fitCenter())
+                    .into(Image);
         }
     }
 
