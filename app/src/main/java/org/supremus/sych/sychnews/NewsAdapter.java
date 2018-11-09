@@ -8,10 +8,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Response;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
     private static final String TAG = "SychNews.NewsAdapter";
@@ -53,7 +56,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     private List<NewsItem> data;
 
     NewsAdapter() {
-        data = DataUtils.generateNews();
+        //data = DataUtils.generateNews();
+        TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
+        try {
+            Response<FeedDTO> response = svc.getStories("world").execute();
+            if (response.code()==200) {
+                data = NewsExtractor.extract(response.body());
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        data = new ArrayList<>();
+
     }
 
     @NonNull
