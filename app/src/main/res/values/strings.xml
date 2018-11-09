@@ -15,4 +15,5 @@
     <string name="empty_message">Enter the message first</string>
     <string name="menu_about">About</string>
     <string name="image_desc">Illustration</string>
+    <string name="retry">Retry</string>
 </resources>

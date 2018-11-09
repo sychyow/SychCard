@@ -14,7 +14,10 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -22,19 +25,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NewsListActivity extends AppCompatActivity {
+public class NewsListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView rv;
     private ProgressBar pb;
+    private LinearLayout errorPanel;
+    private TextView errorText;
+    private Button btnRetry;
+    private Toolbar tb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
-        Toolbar tb = findViewById(R.id.sych_toolbar);
+        findViews();
+        btnRetry.setOnClickListener(this);
         setSupportActionBar(tb);
-        rv = findViewById(R.id.rv_root);
-        pb = findViewById(R.id.progressbar);
+        setOrientation();
+        new LoadDataTask(this).execute();
+    }
+
+    private void setOrientation() {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -46,7 +57,15 @@ public class NewsListActivity extends AppCompatActivity {
             GridLayoutManager glm = new GridLayoutManager(this, colNum);
             getRv().setLayoutManager(glm);
         }
-        new LoadDataTask(this).execute();
+    }
+
+    private void findViews() {
+        tb = findViewById(R.id.sych_toolbar);
+        rv = findViewById(R.id.rv_root);
+        pb = findViewById(R.id.progressbar);
+        errorPanel = findViewById(R.id.errorPanel);
+        errorText = findViewById(R.id.tv_error);
+        btnRetry = findViewById(R.id.btnRetry);
     }
 
     @Override
@@ -69,23 +88,37 @@ public class NewsListActivity extends AppCompatActivity {
         return rv;
     }
 
-    public PBOff getPBOff(int mode) {
-        return new PBOff(mode);
+    public UITool getUITool(int mode) {
+        return new UITool(mode);
     }
 
-    private class PBOff implements Runnable {
+    @Override
+    public void onClick(View v) {
+        errorPanel.setVisibility(View.GONE);
+        pb.setVisibility(View.VISIBLE);
+        new LoadDataTask(this).execute();
+    }
+
+    private class UITool implements Runnable {
         private final static int MODE_PB = 0;
         private final static int MODE_RV = 1;
+        private final static int MODE_ERR = 2;
         private int mode;
 
         private NewsAdapter na;
+        private String et;
 
-        PBOff(int m) {
+        UITool(int m) {
             mode = m;
         }
 
-        void setNewsAdapter(NewsAdapter n) {
-            na = n;
+        UITool setNewsAdapter(NewsAdapter n) {
+            na = n; return this;
+        }
+
+        UITool setErrorText(String s) {
+            et = s;
+            return this;
         }
 
         @Override
@@ -97,6 +130,11 @@ public class NewsListActivity extends AppCompatActivity {
                 case MODE_RV:
                     getRv().setAdapter(na);
                     getRv().setHasFixedSize(true);
+                    break;
+                case MODE_ERR:
+                    pb.setVisibility(View.GONE);
+                    errorPanel.setVisibility(View.VISIBLE);
+                    errorText.setText(et);
                     break;
             }
 
@@ -117,20 +155,35 @@ public class NewsListActivity extends AppCompatActivity {
                 Response<FeedDTO> response = svc.getStories("world").execute();
                 if (response.code()==200) {
                     data = NewsExtractor.extract(response.body());
+                } else {
+                    showError("Server error: " + response.toString());
                 }
             } catch (IOException e) {
-                System.out.print("Network error:");
-                e.printStackTrace();
+                System.out.print("Network error: ");
+                showError("Network error: " + e.getLocalizedMessage());
                 return null;
             }
+            setData(data);
+            return null;
+        }
+
+        private void setData(List<NewsItem> data) {
             NewsAdapter na = new NewsAdapter(data);
             NewsListActivity activity = nla.get();
             if (activity!=null) {
-                PBOff runner = activity.getPBOff(PBOff.MODE_RV);
-                runner.setNewsAdapter(na);
+                UITool runner = activity.getUITool(UITool.MODE_RV)
+                                .setNewsAdapter(na);
                 activity.runOnUiThread(runner);
             }
-            return null;
+        }
+
+        private void showError(String msg) {
+            NewsListActivity activity = nla.get();
+            if (activity!=null) {
+                UITool runner = activity.getUITool(UITool.MODE_ERR)
+                                .setErrorText(msg);
+                activity.runOnUiThread(runner);
+            }
         }
 
         @Override
@@ -138,7 +191,7 @@ public class NewsListActivity extends AppCompatActivity {
             super.onPostExecute(res);
             NewsListActivity activity = nla.get();
             if (activity!=null) {
-                activity.runOnUiThread(activity.getPBOff(PBOff.MODE_PB));
+                activity.runOnUiThread(activity.getUITool(UITool.MODE_PB));
             }
         }
     }
