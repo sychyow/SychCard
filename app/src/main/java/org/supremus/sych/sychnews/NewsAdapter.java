@@ -67,21 +67,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
 
     private List<NewsItem> data;
 
-    NewsAdapter() {
-        //data = DataUtils.generateNews();
-        TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
-        try {
-            Response<FeedDTO> response = svc.getStories("world").execute();
-            if (response.code()==200) {
-                data = NewsExtractor.extract(response.body());
-                return;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        data = new ArrayList<>();
-
+    NewsAdapter(List<NewsItem> news) {
+        data = news;
     }
 
     @NonNull

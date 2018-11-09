@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Response;
 
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -15,7 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewsListActivity extends AppCompatActivity {
@@ -107,7 +111,19 @@ public class NewsListActivity extends AppCompatActivity {
         }
         @Override
         protected Void doInBackground(Object[] objects) {
-            NewsAdapter na = new NewsAdapter();
+            TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
+            List<NewsItem> data = new ArrayList<>();
+            try {
+                Response<FeedDTO> response = svc.getStories("world").execute();
+                if (response.code()==200) {
+                    data = NewsExtractor.extract(response.body());
+                }
+            } catch (IOException e) {
+                System.out.print("Network error:");
+                e.printStackTrace();
+                return null;
+            }
+            NewsAdapter na = new NewsAdapter(data);
             NewsListActivity activity = nla.get();
             if (activity!=null) {
                 PBOff runner = activity.getPBOff(PBOff.MODE_RV);

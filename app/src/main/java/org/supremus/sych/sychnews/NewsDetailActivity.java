@@ -23,7 +23,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.sych_toolbar);
         setSupportActionBar(tb);
         NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);
-        setTitle(newsItem.getCategory().getName());
+        if (newsItem.getCategory()!=null)
+            setTitle(newsItem.getCategory().getName());
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float ivHeight = displayMetrics.heightPixels / 3; //one third of a screen height
