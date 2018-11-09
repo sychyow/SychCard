@@ -3,6 +3,8 @@ package org.supremus.sych.sychnews;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -12,12 +14,35 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class NYTApi {
+    public static final List<String> SECTIONS = Arrays.asList("home",
+            "opinion",
+            "world",
+            "national",
+            "politics",
+            "upshot",
+            "nyregion",
+            "business",
+            "technology",
+            "theater",
+            "sundayreview",
+            "fashion",
+            "magazine",
+            "food",
+            "travel",
+            "magazine",
+            "realestate",
+            "automobiles",
+            "obituaries",
+            "insider");
+
+
     private static final String URL = "https://api.nytimes.com/svc/topstories/v2/";
     private static final String API_KEY = "026d805aa17848b98e01e6d392a23fd0";
 
     private static final int TIMEOUT_IN_SECONDS = 2;
     private static NYTApi nytApi;
     private static TopStoriesService topStoriesService;
+    private static String currentSection = "world";
 
 
     public static synchronized NYTApi getInstance() {
@@ -38,6 +63,14 @@ public final class NYTApi {
 
     public static TopStoriesService getTopStoriesService() {
         return topStoriesService;
+    }
+
+    public static void setCurrentSection(int index) {
+        NYTApi.currentSection = SECTIONS.get(index);
+    }
+
+    public static String getCurrentSection() {
+        return currentSection;
     }
 
     @NonNull

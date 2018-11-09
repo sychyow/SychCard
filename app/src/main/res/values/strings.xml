@@ -18,4 +18,5 @@
     <string name="retry">Retry</string>
     <string name="error_server">Server error:</string>
     <string name="error_network">Network error:</string>
+    <string name="select_theme">Select theme</string>
 </resources>
