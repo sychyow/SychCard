@@ -3,6 +3,7 @@ package org.supremus.sych.sychnews;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.nio.file.SecureDirectoryStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +58,12 @@ public final class NYTApi {
         for(int i=0; i<SECTIONS.size(); i++)
             res[i] = DataUtils.capitaliseFL(SECTIONS.get(i));
         return res;
+    }
+
+    public static int getSelectedIndex() {
+        for(int i=0; i<SECTIONS.size(); i++)
+            if (currentSection.equals(SECTIONS.get(i))) return i;
+        return -1;
     }
 
 
