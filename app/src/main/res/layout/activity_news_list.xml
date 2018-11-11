@@ -71,6 +71,16 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
+            <Spinner
+                android:id="@+id/spin_newslist"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/text_padding"
+                android:layout_marginStart="@dimen/text_padding"
+                app:layout_collapseMode="pin"
+                tools:entries="@tools:sample/cities" />
+
             <Button
                 android:id="@+id/btn_section"
                 android:layout_width="wrap_content"
@@ -78,7 +88,8 @@
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingBottom="@dimen/text_padding"
-                android:text="" />
+                android:text=""
+                android:visibility="gone" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

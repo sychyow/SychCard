@@ -17,9 +17,12 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -28,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NewsListActivity extends AppCompatActivity implements View.OnClickListener {
+public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private RecyclerView rv;
     private ProgressBar pb;
@@ -37,6 +40,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     private Button btnRetry;
     private Button btnSection;
     private Toolbar tb;
+    private Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,19 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         btnSection.setText(NYTApi.getCurrentSection());
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        initSpinner();
         setOrientation();
         new LoadDataTask(this, false).execute();
+    }
+
+    private void initSpinner() {
+        ArrayAdapter<CharSequence> aa = new ArrayAdapter<CharSequence>(
+                this,
+                R.layout.sections_spinner,
+                NYTApi.getSectionNames());
+        sp.setAdapter(aa);
+        sp.setOnItemSelectedListener(this);
+        sp.setSelection(NYTApi.getSelectedIndex());
     }
 
     private void setOrientation() {
@@ -92,6 +107,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         errorText = findViewById(R.id.tv_error);
         btnRetry = findViewById(R.id.btnRetry);
         btnSection = findViewById(R.id.btn_section);
+        sp = findViewById(R.id.spin_newslist);
     }
 
     @Override
@@ -129,6 +145,19 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         if (v.getId() == R.id.btn_section) {
             showSectionDlg();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        NYTApi.setCurrentSection(position);
+        pb.setVisibility(View.VISIBLE);
+        rv.setVisibility(View.GONE);
+        new LoadDataTask(NewsListActivity.this, true).execute();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     private class UITool implements Runnable {
