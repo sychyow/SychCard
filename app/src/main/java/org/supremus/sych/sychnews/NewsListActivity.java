@@ -69,7 +69,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     void showSectionDlg() {
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(this);
         adBuilder.setTitle(getString(R.string.select_theme));
-        adBuilder.setSingleChoiceItems((CharSequence[]) NYTApi.SECTIONS.toArray(), -1, new DialogInterface
+        adBuilder.setSingleChoiceItems(NYTApi.getSectionNames(), -1, new DialogInterface
                 .OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 NYTApi.setCurrentSection(item);

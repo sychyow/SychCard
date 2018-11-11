@@ -52,6 +52,13 @@ public final class NYTApi {
         return nytApi;
     }
 
+    public static String[] getSectionNames() {
+        String res[] = new String[SECTIONS.size()];
+        for(int i=0; i<SECTIONS.size(); i++)
+            res[i] = DataUtils.capitaliseFL(SECTIONS.get(i));
+        return res;
+    }
+
 
     private NYTApi() {
         final OkHttpClient httpClient = buildOkHttpClient();
