@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -48,7 +47,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         btnSection.setText(NYTApi.getCurrentSection());
         setSupportActionBar(tb);
         setOrientation();
-        new LoadDataTask(this).execute();
+        new LoadDataTask(this, false).execute();
     }
 
     private void setOrientation() {
@@ -74,7 +73,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 NYTApi.setCurrentSection(item);
                 pb.setVisibility(View.VISIBLE);
                 rv.setVisibility(View.GONE);
-                new LoadDataTask(NewsListActivity.this).execute();
+                new LoadDataTask(NewsListActivity.this, true).execute();
                 btnSection.setText(NYTApi.getCurrentSection());
                 dialog.dismiss();
             }
@@ -122,7 +121,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         if (v.getId() == R.id.btnRetry) {
             errorPanel.setVisibility(View.GONE);
             pb.setVisibility(View.VISIBLE);
-            new LoadDataTask(this).execute();
+            new LoadDataTask(this, false).execute();
         }
 
         if (v.getId() == R.id.btn_section) {
@@ -134,6 +133,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         private final static int MODE_PB = 0;
         private final static int MODE_RV = 1;
         private final static int MODE_ERR = 2;
+        private final static int MODE_UPD = 3;
         private int mode;
 
         private NewsAdapter na;
@@ -161,12 +161,15 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 case MODE_RV:
                     getRv().setAdapter(na);
                     getRv().setHasFixedSize(true);
-                    getRv().refreshDrawableState();
                     break;
                 case MODE_ERR:
                     pb.setVisibility(View.GONE);
                     errorPanel.setVisibility(View.VISIBLE);
                     errorText.setText(et);
+                    break;
+                case MODE_UPD:
+                    getRv().setVisibility(View.VISIBLE);
+                    getRv().getAdapter().notifyDataSetChanged();
                     break;
             }
 
@@ -175,9 +178,11 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
     private static class LoadDataTask extends AsyncTask<Object, Void, Void> {
         private WeakReference<NewsListActivity> nla;
+        boolean isUpdate;
 
-         LoadDataTask(NewsListActivity activity) {
+         LoadDataTask(NewsListActivity activity, boolean update) {
             this.nla = new WeakReference<>(activity);
+            isUpdate = update;
         }
         @Override
         protected Void doInBackground(Object[] objects) {
@@ -194,9 +199,26 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 showError(SychApp.SYCHCONTEXT.getString(R.string.error_network) + e.getLocalizedMessage());
                 return null;
             }
-            setData(data);
+            if (isUpdate) {
+                updateData(data);
+            } else {
+                setData(data);
+            }
             return null;
         }
+
+        private void updateData(List<NewsItem> data) {
+            //List<NewsItem> oldData;
+            NewsListActivity activity = nla.get();
+            if (activity!=null) {
+                NewsAdapter na = new NewsAdapter(data);
+                UITool runner = activity.getUITool(UITool.MODE_RV)
+                        .setNewsAdapter(na);
+                activity.runOnUiThread(runner);
+                runner = activity.getUITool(UITool.MODE_UPD);
+                activity.runOnUiThread(runner);
+            }
+         }
 
         private void setData(List<NewsItem> data) {
             NewsAdapter na = new NewsAdapter(data);
