@@ -4,7 +4,7 @@
     <string name="photo_desc">Фоточка</string>
     <string name="mail_subject">Сообщение из СычКарты</string>
     <string name="spec_second">Фотограф</string>
-    <string name="spec_third">Умею готовить</string>
+    <string name="spec_third">Готовлю</string>
     <string name="spec_first">Программист</string>
     <string name="message_tip">Введите сообщение</string>
     <string name="send_mail">Послать</string>
@@ -16,4 +16,8 @@
     <string name="empty_message">Сначала напишите сообщение</string>
     <string name="menu_about">О программе</string>
     <string name="image_desc">Иллюстрация</string>
+    <string name="retry">Повторить</string>
+    <string name="error_server">"Ошибка сервера: "</string>
+    <string name="error_network">"Ошибка сети: "</string>
+    <string name="select_theme">Выберите тему</string>
 </resources>

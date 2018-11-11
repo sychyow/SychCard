@@ -6,6 +6,32 @@
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+        android:id="@+id/errorPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/text_padding"
+            android:paddingEnd="@dimen/text_padding"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size"
+            tools:text="Network unavailable" />
+
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            tools:text="Retry" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_root"
         android:layout_width="match_parent"
@@ -44,6 +70,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
+
+            <Spinner
+                android:id="@+id/spin_newslist"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/text_padding"
+                android:layout_marginStart="@dimen/text_padding"
+                app:layout_collapseMode="pin"
+                tools:entries="@tools:sample/cities" />
+
+            <Button
+                android:id="@+id/btn_section"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingBottom="@dimen/text_padding"
+                android:text=""
+                android:visibility="gone" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

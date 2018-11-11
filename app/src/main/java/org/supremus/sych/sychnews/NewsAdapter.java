@@ -7,11 +7,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Response;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
     private static final String TAG = "SychNews.NewsAdapter";
@@ -42,19 +46,34 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         }
 
         void bind(NewsItem item) {
-            Category.setText(item.getCategory().getName());
+            Category cat = item.getCategory();
+            if (cat!=null) {
+                Category.setText(cat.getName());
+            } else {
+                Category.setVisibility(View.GONE);
+            }
             Header.setText(item.getTitle());
             Preview.setText(item.getPreviewText());
             DataUtils.setDateString(Timestamp, item.getPublishDate());
-            Glide.with(itemView).load(item.getImageUrl()).into(Image);
+            Glide.with(itemView)
+                    .load(item.getImageUrl())
+                    .apply(new RequestOptions()
+                            .error(R.drawable.nytlogo)
+                            .placeholder(R.drawable.nytlogo)
+                            .fitCenter())
+                    .into(Image);
         }
     }
 
     private List<NewsItem> data;
 
-    NewsAdapter() {
-        data = DataUtils.generateNews();
+    public List<NewsItem> getData() { return data;}
+
+    NewsAdapter(List<NewsItem> news) {
+        data = news;
     }
+
+
 
     @NonNull
     @Override
@@ -89,9 +108,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     @Override
     public int getItemViewType(int pos) {
         Category c = data.get(pos).getCategory();
-        switch (c.getId()) {
-            case 2: return VIEW_ALTERNATIVE;
-        }
+        if (c!=null && c.getId() % 2==0)
+            return VIEW_ALTERNATIVE;
+
         return VIEW_STANDARD;
     }
 

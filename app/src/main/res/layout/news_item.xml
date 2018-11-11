@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="128dp"
+    android:layout_height="192dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
             android:fontFamily="serif-monospace"
             android:paddingStart="@dimen/text_padding"
             android:paddingEnd="@dimen/text_padding"
@@ -34,6 +35,8 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_desc"
             android:cropToPadding="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:scaleType="fitCenter"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -52,7 +55,7 @@
         <TextView
             android:id="@+id/tv_preview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:layout_below="@+id/tv_header"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
@@ -61,7 +64,6 @@
             android:lines="3"
             android:paddingStart="@dimen/text_padding"
             android:paddingEnd="@dimen/text_padding"
-            android:paddingBottom="@dimen/text_padding"
             android:textSize="14sp"
             tools:text="@string/curriculum_vitae" />
 
@@ -69,10 +71,10 @@
             android:id="@+id/tv_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_preview"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
             android:textSize="12sp"
             tools:text="@tools:sample/date/ddmmyy" />
     </RelativeLayout>

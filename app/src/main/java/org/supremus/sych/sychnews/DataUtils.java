@@ -148,4 +148,9 @@ class DataUtils {
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, loc);
         tv.setText(df.format(d));
     }
+
+    static String capitaliseFL(String src) {
+        if (src==null) return null;
+        return src.substring(0, 1).toUpperCase()+src.substring(1);
+    }
 }
