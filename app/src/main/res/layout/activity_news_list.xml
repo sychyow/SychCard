@@ -32,18 +32,6 @@
             tools:text="Retry" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/base_margin"
-        android:layout_marginEnd="@dimen/base_margin"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_root"
         android:layout_width="match_parent"
@@ -82,6 +70,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
+
+            <Button
+                android:id="@+id/btn_section"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingBottom="@dimen/text_padding"
+                android:text="" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

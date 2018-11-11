@@ -1,5 +1,6 @@
 package org.supremus.sych.sychnews;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -46,6 +47,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         btnSection.setOnClickListener(this);
         btnSection.setText(NYTApi.getCurrentSection());
         setSupportActionBar(tb);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setOrientation();
         new LoadDataTask(this, false).execute();
     }
@@ -208,7 +210,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         }
 
         private void updateData(List<NewsItem> data) {
-            //List<NewsItem> oldData;
             NewsListActivity activity = nla.get();
             if (activity!=null) {
                 NewsAdapter na = new NewsAdapter(data);
