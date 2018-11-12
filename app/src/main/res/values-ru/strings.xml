@@ -20,4 +20,5 @@
     <string name="error_server">"Ошибка сервера: "</string>
     <string name="error_network">"Ошибка сети: "</string>
     <string name="select_theme">Выберите тему</string>
+    <string name="welcome">Привет!</string>
 </resources>
