@@ -40,8 +40,7 @@ public class IntroActivity extends AppCompatActivity {
 
     private boolean needIntro() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean introState = sharedPref.getBoolean(INTRO_PREF, INTRO_DEF);
-        return introState;
+        return sharedPref.getBoolean(INTRO_PREF, INTRO_DEF);
     }
 
     private void updatePref() {
@@ -49,7 +48,7 @@ public class IntroActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sharedPref.edit();
         Boolean introState = sharedPref.getBoolean(INTRO_PREF, INTRO_DEF);
         ed.putBoolean(INTRO_PREF, !introState);
-        ed.commit();
+        ed.apply();
     }
 
     private void startSecondActivity() {
