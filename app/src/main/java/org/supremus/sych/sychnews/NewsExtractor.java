@@ -1,5 +1,12 @@
 package org.supremus.sych.sychnews;
 
+import org.supremus.sych.sychnews.data.Category;
+import org.supremus.sych.sychnews.data.FeedDTO;
+import org.supremus.sych.sychnews.data.MultimediaDTO;
+import org.supremus.sych.sychnews.data.NewsEntity;
+import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.data.ResultDTO;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +41,17 @@ public final class NewsExtractor {
         for (ResultDTO res:feed.getResults()){
             NewsItem item = new NewsItem(res.getTitle(), getImageUrl(res), getCategory(res.getSubsection()),
                     res.getPublishedDate(), res.getAbstract(), res.getUrl());
+            news.add(item);
+        }
+        return news;
+    }
+
+    public static List<NewsItem> extract(List<NewsEntity> input) {
+        List<NewsItem> news = new ArrayList<NewsItem>();
+        Categories.clear();
+        for (NewsEntity ent:input){
+            NewsItem item = new NewsItem(ent.title, ent.imageUrl, getCategory(ent.category),
+                    ent.publishDate, ent.previewText, ent.fullText);
             news.add(item);
         }
         return news;

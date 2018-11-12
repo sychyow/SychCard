@@ -2,6 +2,9 @@ package org.supremus.sych.sychnews;
 
 import android.widget.TextView;
 
+import org.supremus.sych.sychnews.data.Category;
+import org.supremus.sych.sychnews.data.NewsItem;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;

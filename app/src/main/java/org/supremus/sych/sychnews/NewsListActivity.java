@@ -1,6 +1,5 @@
 package org.supremus.sych.sychnews;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.supremus.sych.sychnews.data.FeedDTO;
+import org.supremus.sych.sychnews.data.NewsItem;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;

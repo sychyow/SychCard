@@ -1,10 +1,12 @@
 
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.data;
 
 import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import org.supremus.sych.sychnews.data.MultimediaDTO;
 
 public class ResultDTO {
 

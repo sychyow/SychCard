@@ -1,5 +1,5 @@
 
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.data;
 
 import com.google.gson.annotations.Expose;
 
