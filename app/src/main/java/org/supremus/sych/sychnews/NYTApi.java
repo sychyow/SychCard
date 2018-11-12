@@ -44,6 +44,7 @@ public final class NYTApi {
     private static NYTApi nytApi;
     private static TopStoriesService topStoriesService;
     private static String currentSection = "world";
+    private static boolean enabled = false;
 
 
     public static synchronized NYTApi getInstance() {
@@ -87,10 +88,18 @@ public final class NYTApi {
         return currentSection;
     }
 
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(boolean enabled) {
+        NYTApi.enabled = enabled;
+    }
+
     @NonNull
     private Retrofit buildRetrofitClient(@NonNull OkHttpClient client) {
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+                .setDateFormat(DataUtils.DATE_FORMAT)
                 .create();
 
         return new Retrofit.Builder()

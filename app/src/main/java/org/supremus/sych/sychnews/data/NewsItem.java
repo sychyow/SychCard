@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class NewsItem implements Parcelable {
 
+    private int id;
     private final String title;
     private final String imageUrl;
     private final Category category;
@@ -84,4 +85,12 @@ public class NewsItem implements Parcelable {
             return new NewsItem[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

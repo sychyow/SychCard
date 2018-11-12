@@ -6,11 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Response;
 
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -23,14 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.supremus.sych.sychnews.data.FeedDTO;
-import org.supremus.sych.sychnews.data.NewsItem;
-
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -56,7 +46,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
-        new LoadDataTask(this, false).execute();
+        new LoadDataTask(this, LoadDataTask.TASK_DB, false).execute();
     }
 
     private void initSpinner() {
@@ -92,7 +82,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 NYTApi.setCurrentSection(item);
                 pb.setVisibility(View.VISIBLE);
                 rv.setVisibility(View.GONE);
-                new LoadDataTask(NewsListActivity.this, true).execute();
+                new LoadDataTask(NewsListActivity.this, LoadDataTask.TASK_NETWORK,true).execute();
                 btnSection.setText(NYTApi.getCurrentSection());
                 dialog.dismiss();
             }
@@ -124,6 +114,10 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
             case R.id.menu_about:
                 AboutActivity.launch(this);
                 return true;
+            case R.id.menu_update: {
+                pb.setVisibility(View.VISIBLE);
+                new LoadDataTask(this, LoadDataTask.TASK_NETWORK, true).execute();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -141,7 +135,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         if (v.getId() == R.id.btnRetry) {
             errorPanel.setVisibility(View.GONE);
             pb.setVisibility(View.VISIBLE);
-            new LoadDataTask(this, false).execute();
+            new LoadDataTask(this, LoadDataTask.TASK_NETWORK, false).execute();
         }
 
         if (v.getId() == R.id.btn_section) {
@@ -154,7 +148,8 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         NYTApi.setCurrentSection(position);
         pb.setVisibility(View.VISIBLE);
         rv.setVisibility(View.GONE);
-        new LoadDataTask(NewsListActivity.this, true).execute();
+        int mode = NYTApi.isEnabled()?LoadDataTask.TASK_NETWORK:LoadDataTask.TASK_DB;
+        new LoadDataTask(NewsListActivity.this, mode,true).execute();
     }
 
     @Override
@@ -162,11 +157,11 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private class UITool implements Runnable {
-        private final static int MODE_PB = 0;
-        private final static int MODE_RV = 1;
-        private final static int MODE_ERR = 2;
-        private final static int MODE_UPD = 3;
+     class UITool implements Runnable {
+        final static int MODE_PB = 0;
+        final static int MODE_RV = 1;
+        final static int MODE_ERR = 2;
+        final static int MODE_UPD = 3;
         private int mode;
 
         private NewsAdapter na;
@@ -206,78 +201,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                     break;
             }
 
-        }
-    }
-
-    private static class LoadDataTask extends AsyncTask<Object, Void, Void> {
-        private WeakReference<NewsListActivity> nla;
-        boolean isUpdate;
-
-         LoadDataTask(NewsListActivity activity, boolean update) {
-            this.nla = new WeakReference<>(activity);
-            isUpdate = update;
-        }
-        @Override
-        protected Void doInBackground(Object[] objects) {
-            TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
-            List<NewsItem> data = new ArrayList<>();
-            try {
-                Response<FeedDTO> response = svc.getStories(NYTApi.getCurrentSection()).execute();
-                if (response.code()==200) {
-                    data = NewsExtractor.extract(response.body());
-                } else {
-                    showError(SychApp.SYCHCONTEXT.getString(R.string.error_server) + response.toString());
-                }
-            } catch (IOException e) {
-                showError(SychApp.SYCHCONTEXT.getString(R.string.error_network) + e.getLocalizedMessage());
-                return null;
-            }
-            if (isUpdate) {
-                updateData(data);
-            } else {
-                setData(data);
-            }
-            return null;
-        }
-
-        private void updateData(List<NewsItem> data) {
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                NewsAdapter na = new NewsAdapter(data);
-                UITool runner = activity.getUITool(UITool.MODE_RV)
-                        .setNewsAdapter(na);
-                activity.runOnUiThread(runner);
-                runner = activity.getUITool(UITool.MODE_UPD);
-                activity.runOnUiThread(runner);
-            }
-         }
-
-        private void setData(List<NewsItem> data) {
-            NewsAdapter na = new NewsAdapter(data);
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                UITool runner = activity.getUITool(UITool.MODE_RV)
-                                .setNewsAdapter(na);
-                activity.runOnUiThread(runner);
-            }
-        }
-
-        private void showError(String msg) {
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                UITool runner = activity.getUITool(UITool.MODE_ERR)
-                                .setErrorText(msg);
-                activity.runOnUiThread(runner);
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void res) {
-            super.onPostExecute(res);
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                activity.runOnUiThread(activity.getUITool(UITool.MODE_PB));
-            }
         }
     }
 

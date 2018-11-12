@@ -52,8 +52,22 @@ public final class NewsExtractor {
         for (NewsEntity ent:input){
             NewsItem item = new NewsItem(ent.title, ent.imageUrl, getCategory(ent.category),
                     ent.publishDate, ent.previewText, ent.fullText);
+            item.setId(ent.id);
             news.add(item);
         }
         return news;
+    }
+
+    public static NewsEntity makeEntity(NewsItem item) {
+        NewsEntity entity = new NewsEntity(
+                item.getTitle(),
+                item.getImageUrl(),
+                item.getCategory()!=null?
+                item.getCategory().getName():null,
+                item.getPublishDate(),
+                item.getPreviewText(),
+                item.getFullText());
+        entity.section = NYTApi.getCurrentSection();
+        return entity;
     }
 }
