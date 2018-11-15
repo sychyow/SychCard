@@ -51,9 +51,7 @@ public final class NewsExtractor {
         List<NewsItem> news = new ArrayList<NewsItem>();
         Categories.clear();
         for (NewsEntity ent:input){
-            NewsItem item = new NewsItem(ent.title, ent.imageUrl, getCategory(ent.category),
-                    ent.publishDate, ent.previewText, ent.fullText);
-            item.setId(ent.id);
+            NewsItem item = makeItem(ent);
             news.add(item);
         }
         return news;
@@ -70,5 +68,12 @@ public final class NewsExtractor {
                 item.getFullText());
         entity.section = NYTApi.getCurrentSection();
         return entity;
+    }
+
+    public static NewsItem makeItem(NewsEntity ent) {
+        NewsItem item =  new NewsItem(ent.title, ent.imageUrl, getCategory(ent.category),
+                ent.publishDate, ent.previewText, ent.fullText);
+        item.setId(ent.id);
+        return item;
     }
 }
