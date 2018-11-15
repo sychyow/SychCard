@@ -42,11 +42,8 @@ class LoadDataTask extends AsyncTask<Object, Void, Void> {
         
         data = loadFromDB();
 
-        if (isUpdate) {
-            updateData(data);
-        } else {
-            setData(data);
-        }
+        setData(data);
+
         return null;
     }
 
@@ -80,25 +77,20 @@ class LoadDataTask extends AsyncTask<Object, Void, Void> {
         return data;
     }
 
-    private void updateData(List<NewsItem> data) {
+
+
+    private void setData(List<NewsItem> data) {
+
         NewsListActivity activity = nla.get();
         if (activity!=null) {
             NewsAdapter na = new NewsAdapter(data);
             NewsListActivity.UITool runner = activity.getUITool(NewsListActivity.UITool.MODE_RV)
-                    .setNewsAdapter(na);
-            activity.runOnUiThread(runner);
-            runner = activity.getUITool(NewsListActivity.UITool.MODE_UPD);
-            activity.runOnUiThread(runner);
-        }
-     }
-
-    private void setData(List<NewsItem> data) {
-        NewsAdapter na = new NewsAdapter(data);
-        NewsListActivity activity = nla.get();
-        if (activity!=null) {
-            NewsListActivity.UITool runner = activity.getUITool(NewsListActivity.UITool.MODE_RV)
                             .setNewsAdapter(na);
             activity.runOnUiThread(runner);
+            if (isUpdate) {
+                runner = activity.getUITool(NewsListActivity.UITool.MODE_UPD);
+                activity.runOnUiThread(runner);
+            }
         }
     }
 

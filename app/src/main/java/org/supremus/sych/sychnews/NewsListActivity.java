@@ -43,7 +43,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
-        new LoadDataTask(this, LoadDataTask.TASK_DB, false).execute();
+        NewsLoader.load(this);
     }
 
     private void initSpinner() {
@@ -93,8 +93,9 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 AboutActivity.launch(this);
                 return true;
             case R.id.menu_update: {
-                pb.setVisibility(View.VISIBLE);
-                new LoadDataTask(this, LoadDataTask.TASK_NETWORK, true).execute();
+                NewsLoader.setUpdate(true);
+                NewsLoader.forceNetwork();
+                NewsLoader.load(this);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -102,6 +103,10 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
     public RecyclerView getRv() {
         return rv;
+    }
+
+    public ProgressBar getPb() {
+        return pb;
     }
 
     public UITool getUITool(int mode) {
@@ -112,8 +117,8 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if (v.getId() == R.id.btnRetry) {
             errorPanel.setVisibility(View.GONE);
-            pb.setVisibility(View.VISIBLE);
-            new LoadDataTask(this, LoadDataTask.TASK_NETWORK, false).execute();
+            NewsLoader.forceNetwork();
+            NewsLoader.load(this);
         }
     }
 
@@ -122,8 +127,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         NYTApi.setCurrentSection(position);
         pb.setVisibility(View.VISIBLE);
         rv.setVisibility(View.GONE);
-        int mode = NYTApi.isEnabled()?LoadDataTask.TASK_NETWORK:LoadDataTask.TASK_DB;
-        new LoadDataTask(NewsListActivity.this, mode,true).execute();
+        NewsLoader.load(NewsListActivity.this);
     }
 
     @Override
@@ -163,6 +167,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 case MODE_RV:
                     getRv().setAdapter(na);
                     getRv().setHasFixedSize(true);
+                    getRv().setVisibility(View.VISIBLE);
                     break;
                 case MODE_ERR:
                     pb.setVisibility(View.GONE);

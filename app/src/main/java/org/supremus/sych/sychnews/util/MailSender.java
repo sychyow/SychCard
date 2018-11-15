@@ -12,7 +12,7 @@ public class MailSender {
     private final ComponentName mailName;
     private static final String MAIL_TYPE = "message/rfc822";
 
-    MailSender(Context context) {
+    public MailSender(Context context) {
         mailIntent.setType(MAIL_TYPE);
         mailIntent.setData(Uri.parse(String.format("mailto:%s", context.getString(R.string.mail_recipient))));
         mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {context.getString(R.string.mail_recipient)});
