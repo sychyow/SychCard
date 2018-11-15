@@ -6,10 +6,12 @@ import org.supremus.sych.sychnews.data.FeedDTO;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.network.NYTApi;
+import org.supremus.sych.sychnews.network.TopStoriesService;
+import org.supremus.sych.sychnews.util.NewsExtractor;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;

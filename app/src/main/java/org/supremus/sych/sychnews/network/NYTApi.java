@@ -1,9 +1,10 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.nio.file.SecureDirectoryStream;
+import org.supremus.sych.sychnews.util.DataUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;

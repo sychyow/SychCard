@@ -1,5 +1,6 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.util;
 
+import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.data.Category;
 import org.supremus.sych.sychnews.data.FeedDTO;
 import org.supremus.sych.sychnews.data.MultimediaDTO;

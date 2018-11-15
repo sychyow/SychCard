@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.util;
 
 import android.widget.TextView;
 
@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-class DataUtils {
+public class DataUtils {
 
     public static List<NewsItem> generateNews() {
         final Category darwinAwards = new Category(1, "Darwin Awards");
@@ -154,7 +154,7 @@ class DataUtils {
         tv.setText(df.format(d));
     }
 
-    static String capitaliseFL(String src) {
+    public static String capitaliseFL(String src) {
         if (src==null) return null;
         return src.substring(0, 1).toUpperCase()+src.substring(1);
     }

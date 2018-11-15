@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.supremus.sych.sychnews.network.NYTApi;
+
 
 public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 

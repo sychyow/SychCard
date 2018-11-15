@@ -1,6 +1,6 @@
 package org.supremus.sych.sychnews.data;
 
-import org.supremus.sych.sychnews.DateConverter;
+import org.supremus.sych.sychnews.util.DateConverter;
 
 import java.util.Date;
 
@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 @Entity(tableName = "news")

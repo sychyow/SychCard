@@ -1,11 +1,13 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.util;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-class MailSender {
+import org.supremus.sych.sychnews.R;
+
+public class MailSender {
     private final Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
     private final ComponentName mailName;
     private static final String MAIL_TYPE = "message/rfc822";

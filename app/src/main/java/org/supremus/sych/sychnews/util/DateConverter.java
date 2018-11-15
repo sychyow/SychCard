@@ -1,6 +1,6 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.util;
 
-import android.provider.SyncStateContract;
+import org.supremus.sych.sychnews.util.DataUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
