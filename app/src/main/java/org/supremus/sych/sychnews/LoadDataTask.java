@@ -54,6 +54,7 @@ class LoadDataTask extends AsyncTask<Object, Void, Void> {
     }
 
     private void saveToDB(List<NewsItem> data) {
+        if (data==null) return;
         NewsEntity news[] = new NewsEntity[data.size()];
         for (int i=0; i<data.size(); i++)
             news[i] = NewsExtractor.makeEntity(data.get(i));

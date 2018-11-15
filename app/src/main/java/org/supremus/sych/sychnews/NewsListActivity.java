@@ -1,13 +1,11 @@
 package org.supremus.sych.sychnews;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -30,7 +28,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout errorPanel;
     private TextView errorText;
     private Button btnRetry;
-    private Button btnSection;
     private Toolbar tb;
     private Spinner sp;
 
@@ -40,8 +37,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_news_list);
         findViews();
         btnRetry.setOnClickListener(this);
-        btnSection.setOnClickListener(this);
-        btnSection.setText(NYTApi.getCurrentSection());
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
@@ -50,7 +45,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initSpinner() {
-        ArrayAdapter<CharSequence> aa = new ArrayAdapter<CharSequence>(
+        ArrayAdapter<CharSequence> aa = new ArrayAdapter<>(
                 this,
                 R.layout.sections_spinner,
                 NYTApi.getSectionNames());
@@ -73,24 +68,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    void showSectionDlg() {
-        AlertDialog.Builder adBuilder = new AlertDialog.Builder(this);
-        adBuilder.setTitle(getString(R.string.select_theme));
-        adBuilder.setSingleChoiceItems(NYTApi.getSectionNames(), NYTApi.getSelectedIndex(), new DialogInterface
-                .OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                NYTApi.setCurrentSection(item);
-                pb.setVisibility(View.VISIBLE);
-                rv.setVisibility(View.GONE);
-                new LoadDataTask(NewsListActivity.this, LoadDataTask.TASK_NETWORK,true).execute();
-                btnSection.setText(NYTApi.getCurrentSection());
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = adBuilder.create();
-        alert.show();
-    }
-
     private void findViews() {
         tb = findViewById(R.id.sych_toolbar);
         rv = findViewById(R.id.rv_root);
@@ -98,7 +75,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         errorPanel = findViewById(R.id.errorPanel);
         errorText = findViewById(R.id.tv_error);
         btnRetry = findViewById(R.id.btnRetry);
-        btnSection = findViewById(R.id.btn_section);
         sp = findViewById(R.id.spin_newslist);
     }
 
@@ -136,10 +112,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
             errorPanel.setVisibility(View.GONE);
             pb.setVisibility(View.VISIBLE);
             new LoadDataTask(this, LoadDataTask.TASK_NETWORK, false).execute();
-        }
-
-        if (v.getId() == R.id.btn_section) {
-            showSectionDlg();
         }
     }
 
