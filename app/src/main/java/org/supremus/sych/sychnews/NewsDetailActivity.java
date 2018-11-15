@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +19,13 @@ import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.fragments.NewsViewFragment;
 import org.supremus.sych.sychnews.util.DataUtils;
 
-public class NewsDetailActivity extends AppCompatActivity {
+interface UIUpdater {
+    void updateUI(NewsItem item);
+}
+
+public class NewsDetailActivity extends AppCompatActivity implements UIUpdater {
+
+
     private static Intent intent = null;
     public static final String EXTRA_ITEM = "EXTRA_ITEM";
     public static final String EXTRA_ID = "EXTRA_ID";
@@ -53,11 +60,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         parent.startActivity(intent);
     }
 
-    public void initUI(NewsItem newsItem) {
+    public void updateUI(NewsItem newsItem) {
 
         if (newsItem.getCategory()!=null) {
-            getSupportActionBar().setTitle(newsItem.getCategory().getName());
-            //setTitle(newsItem.getCategory().getName());
+            setTitle(newsItem.getCategory().getName());
         }
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -73,4 +79,5 @@ public class NewsDetailActivity extends AppCompatActivity {
         TextView fullText = findViewById(R.id.tv_news_text);
         fullText.setText(newsItem.getFullText());
     }
+
 }

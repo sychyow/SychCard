@@ -1,5 +1,6 @@
 package org.supremus.sych.sychnews;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.data.NewsDB;
@@ -10,12 +11,12 @@ import org.supremus.sych.sychnews.util.NewsExtractor;
 import java.lang.ref.WeakReference;
 
 public class GetItemTask extends AsyncTask<Object, Void, Void> {
-    private final WeakReference<NewsDetailActivity> nda;
+    private final WeakReference<Activity> nda;
     private final NewsDB db;
     private final int newsId;
     private NewsItem newsItem;
 
-    public GetItemTask(NewsDetailActivity activity, int newsId) {
+    public GetItemTask(Activity activity, int newsId) {
         this.nda = new WeakReference<>(activity);
         db = NewsDB.getAppDatabase(activity);
         this.newsId = newsId;
@@ -31,9 +32,10 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        NewsDetailActivity activity = nda.get();
+        Activity activity = nda.get();
         if (activity!=null) {
-            activity.runOnUiThread(() -> activity.initUI(newsItem));
+            UIUpdater updater = (UIUpdater) activity;
+            activity.runOnUiThread(() -> updater.updateUI(newsItem));
         }
     }
 }
