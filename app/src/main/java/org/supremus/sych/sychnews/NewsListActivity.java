@@ -20,10 +20,14 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.network.NYTApi;
+import org.supremus.sych.sychnews.tasks.GetItemTask;
+
+import java.util.List;
 
 
-public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class NewsListActivity extends AppCompatActivity implements NewsItemProvider,View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
 
     private RecyclerView rv;
     private ProgressBar pb;
@@ -32,6 +36,25 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
     private Button btnRetry;
     private Toolbar tb;
     private Spinner sp;
+
+
+    public final static int MODE_PB = 0;
+    public final static int MODE_RV = 1;
+    public final static int MODE_ERR = 2;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int id = NYTApi.getChangedId();
+        if (id > 0) {
+            new GetItemTask(this, id).execute();
+            NYTApi.setChangedId(-1);
+        }
+    }
+
+    public final static int MODE_UPD = 3;
+
+    private UITool tool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +132,27 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         return pb;
     }
 
-    public UITool getUITool(int mode) {
-        return new UITool(mode);
+    @Override
+    public UITooler getUITool(int mode) {
+         tool = new UITool(mode);
+         return this;
+    }
+
+    @Override
+    public UITooler setNewsAdapter(NewsAdapter na) {
+        tool.setNewsAdapter(na);
+        return this;
+    }
+
+    @Override
+    public UITooler setErrorText(String msg) {
+        tool.setErrorText(msg);
+        return this;
+    }
+
+    @Override
+    public void apply() {
+        runOnUiThread(tool);
     }
 
     @Override
@@ -135,11 +177,25 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-     class UITool implements Runnable {
-        final static int MODE_PB = 0;
-        final static int MODE_RV = 1;
-        final static int MODE_ERR = 2;
-        final static int MODE_UPD = 3;
+    @Override
+    public NewsItem getItem() {
+        return null;
+    }
+
+    @Override
+    public void setItem(NewsItem val) {
+        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
+        List<NewsItem> ln  = (na).getData();
+        for (int i=0; i<ln.size(); i++) {
+            if (ln.get(i).getId()==val.getId()) {
+                ln.set(i, val);
+                na.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    class UITool implements Runnable {
         private int mode;
 
         private NewsAdapter na;

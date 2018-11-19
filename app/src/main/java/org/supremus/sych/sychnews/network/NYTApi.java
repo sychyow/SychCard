@@ -46,6 +46,7 @@ public final class NYTApi {
     private static TopStoriesService topStoriesService;
     private static String currentSection = "world";
     private static boolean enabled = false;
+    private static int changedId = -1;
 
 
     public static synchronized NYTApi getInstance() {
@@ -95,6 +96,14 @@ public final class NYTApi {
 
     public static void setEnabled(boolean enabled) {
         NYTApi.enabled = enabled;
+    }
+
+    public static void setChangedId(int id) {
+        changedId = id;
+    }
+
+    public static int getChangedId() {
+        return changedId;
     }
 
     @NonNull

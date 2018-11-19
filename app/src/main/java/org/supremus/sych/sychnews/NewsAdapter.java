@@ -70,7 +70,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
 
     public List<NewsItem> getData() { return data;}
 
-    NewsAdapter(List<NewsItem> news) {
+    public NewsAdapter(List<NewsItem> news) {
         data = news;
     }
 

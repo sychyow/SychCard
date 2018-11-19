@@ -67,6 +67,7 @@ public final class NewsExtractor {
                 item.getPreviewText(),
                 item.getFullText());
         entity.section = NYTApi.getCurrentSection();
+        entity.id = item.getId();
         return entity;
     }
 

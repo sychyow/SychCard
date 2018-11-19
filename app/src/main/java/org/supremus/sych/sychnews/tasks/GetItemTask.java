@@ -1,8 +1,11 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.tasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import org.supremus.sych.sychnews.NewsItemProvider;
+import org.supremus.sych.sychnews.UIUpdater;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
 import org.supremus.sych.sychnews.data.NewsItem;
@@ -34,10 +37,8 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
         super.onPostExecute(aVoid);
         Activity activity = nda.get();
         if (activity!=null) {
-            UIUpdater updater = (UIUpdater) activity;
             NewsItemProvider nip = (NewsItemProvider) activity;
             nip.setItem(newsItem);
-            activity.runOnUiThread(() -> updater.updateUI(newsItem));
         }
     }
 }

@@ -1,7 +1,13 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.tasks;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 
+import org.supremus.sych.sychnews.NewsAdapter;
+import org.supremus.sych.sychnews.NewsListActivity;
+import org.supremus.sych.sychnews.R;
+import org.supremus.sych.sychnews.SychApp;
+import org.supremus.sych.sychnews.UITooler;
 import org.supremus.sych.sychnews.data.FeedDTO;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
@@ -16,16 +22,16 @@ import java.util.List;
 
 import retrofit2.Response;
 
-class LoadDataTask extends AsyncTask<Object, Void, Void> {
+public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     public static int TASK_DB = 1;
     public static int TASK_NETWORK = 2;
-    private WeakReference<NewsListActivity> nla;
+    private WeakReference<UITooler> wTooler;
     boolean isUpdate;
     int dataMode;
     private final NewsDB db;
 
-    LoadDataTask(NewsListActivity activity, int mode, boolean update) {
-        this.nla = new WeakReference<>(activity);
+    public LoadDataTask(Activity activity, int mode, boolean update) {
+        wTooler = new WeakReference<>((UITooler) activity);
         db = NewsDB.getAppDatabase(activity);
         isUpdate = update;
         dataMode = mode;
@@ -81,34 +87,34 @@ class LoadDataTask extends AsyncTask<Object, Void, Void> {
 
     private void setData(List<NewsItem> data) {
 
-        NewsListActivity activity = nla.get();
-        if (activity!=null) {
+        UITooler tooler = wTooler.get();
+        if (tooler!=null) {
             NewsAdapter na = new NewsAdapter(data);
-            NewsListActivity.UITool runner = activity.getUITool(NewsListActivity.UITool.MODE_RV)
-                            .setNewsAdapter(na);
-            activity.runOnUiThread(runner);
+            tooler.getUITool(NewsListActivity.MODE_RV)
+                    .setNewsAdapter(na)
+                    .apply();
             if (isUpdate) {
-                runner = activity.getUITool(NewsListActivity.UITool.MODE_UPD);
-                activity.runOnUiThread(runner);
+                tooler.getUITool(NewsListActivity.MODE_UPD)
+                        .apply();
             }
         }
     }
 
     private void showError(String msg) {
-        NewsListActivity activity = nla.get();
-        if (activity!=null) {
-            NewsListActivity.UITool runner = activity.getUITool(NewsListActivity.UITool.MODE_ERR)
-                            .setErrorText(msg);
-            activity.runOnUiThread(runner);
+        UITooler tooler = wTooler.get();
+        if (tooler!=null) {
+            tooler.getUITool(NewsListActivity.MODE_ERR)
+                    .setErrorText(msg)
+                    .apply();
         }
     }
 
     @Override
     protected void onPostExecute(Void res) {
         super.onPostExecute(res);
-        NewsListActivity activity = nla.get();
-        if (activity!=null) {
-            activity.runOnUiThread(activity.getUITool(NewsListActivity.UITool.MODE_PB));
+        UITooler tooler = wTooler.get();
+        if (tooler!=null) {
+            tooler.getUITool(NewsListActivity.MODE_PB).apply();
         }
     }
 }

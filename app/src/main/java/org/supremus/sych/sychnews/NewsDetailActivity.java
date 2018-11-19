@@ -20,11 +20,9 @@ import com.bumptech.glide.Glide;
 import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.fragments.NewsEditFragment;
 import org.supremus.sych.sychnews.fragments.NewsViewFragment;
+import org.supremus.sych.sychnews.tasks.GetItemTask;
+import org.supremus.sych.sychnews.tasks.SetItemTask;
 import org.supremus.sych.sychnews.util.DataUtils;
-
-interface UIUpdater {
-    void updateUI(NewsItem item);
-}
 
 public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, NewsItemProvider, View.OnClickListener {
 
@@ -35,7 +33,7 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
     private static final int MODE_SHOW = 1;
     private static final int MODE_EDIT = 2;
     private int activityMode = MODE_SHOW;
-    private NewsItem currentItem;
+    private NewsItem currentItem = null;
     private Button btnEdit;
 
     @Override
@@ -54,13 +52,19 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
             setSupportActionBar(tb);
             btnEdit = findViewById(R.id.btn_edit);
             btnEdit.setOnClickListener(this);
-            NewsViewFragment nvf = new NewsViewFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.frame_details, nvf, "NEWS_VIEW")
-                    .commit();
+            makeViewer();
+            int newsId = getIntent().getIntExtra(NewsDetailActivity.EXTRA_ID, 0);
+            new GetItemTask(this, newsId).execute();
         }
 
+    }
+
+    public void makeViewer() {
+        NewsViewFragment nvf = new NewsViewFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.frame_details, nvf, "NEWS_VIEW")
+                .commit();
     }
 
     public static void launch(Context parent, NewsItem item) {
@@ -71,10 +75,6 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
     }
 
     public void updateUI(NewsItem newsItem) {
-
-        if (newsItem.getCategory()!=null) {
-            setTitle(newsItem.getCategory().getName());
-        }
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float ivHeight = displayMetrics.heightPixels / 3; //NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);one third of a screen height
@@ -88,6 +88,10 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
         DataUtils.setDateString(timestamp, newsItem.getPublishDate());
         TextView fullText = findViewById(R.id.tv_news_text);
         fullText.setText(newsItem.getFullText());
+
+        if (newsItem.getCategory()!=null) {
+            setTitle(newsItem.getCategory().getName());
+        }
     }
 
     @Override
@@ -106,11 +110,6 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
                 activityMode = MODE_SHOW;
                 btnEdit.setText(R.string.btn_edit);
                 updateData();
-                NewsViewFragment nvf = new NewsViewFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frame_details, nvf, "NEWS_VIEW")
-                        .commit();
         }
     }
 
@@ -118,6 +117,13 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
         NewsEditFragment nef =
                 (NewsEditFragment) getSupportFragmentManager().findFragmentByTag("NEWS_EDIT");
         currentItem = nef.getNews();
+        Log.i("SYCH", currentItem.getTitle());
+        new SetItemTask(this, currentItem).execute();
+        NewsViewFragment nvf = new NewsViewFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_details, nvf, "NEWS_VIEW")
+                .commit();
     }
 
     @Override

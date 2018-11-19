@@ -46,11 +46,13 @@ public class NewsEditFragment extends Fragment {
     }
 
     public NewsItem getNews() {
-        return  new NewsItem(etTitle.getText().toString(),
+        NewsItem newItem =  new NewsItem(etTitle.getText().toString(),
                 baseItem.getImageUrl(),
                 baseItem.getCategory(),
                 baseItem.getPublishDate(),
                 etShortText.getText().toString(),
                 etFullText.getText().toString());
+        newItem.setId(baseItem.getId());
+        return newItem;
     }
 }
