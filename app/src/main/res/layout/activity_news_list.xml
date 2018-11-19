@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/errorPanel"
@@ -36,9 +36,9 @@
         android:id="@+id/rv_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".NewsListActivity"
-        tools:listitem="@layout/news_item"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        tools:listitem="@layout/news_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -60,8 +60,8 @@
             android:layout_height="@dimen/appbar_height"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:expandedTitleMarginTop="@dimen/title_margin"
             app:expandedTitleMarginStart="@dimen/title_margin"
+            app:expandedTitleMarginTop="@dimen/title_margin"
             app:expandedTitleTextAppearance="@android:style/TextAppearance.Material.Title"
             app:layout_scrollFlags="scroll|snap|enterAlways">
 
@@ -69,17 +69,17 @@
                 android:id="@+id/sych_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin">
 
-            <Spinner
-                android:id="@+id/spin_newslist"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/text_padding"
-                android:layout_marginStart="@dimen/text_padding"
-                app:layout_collapseMode="pin"
-                tools:entries="@tools:sample/cities" />
+                <Spinner
+                    android:id="@+id/spin_newslist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/text_padding"
+                    app:layout_collapseMode="pin"
+                    tools:entries="@tools:sample/cities" />
+            </androidx.appcompat.widget.Toolbar>
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
