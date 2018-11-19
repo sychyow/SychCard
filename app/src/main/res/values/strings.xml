@@ -21,4 +21,12 @@
     <string name="select_theme">Select theme</string>
     <string name="welcome">Welcome!</string>
     <string name="menu_update">Update</string>
+    <string name="edit_title">Title:</string>
+    <string name="edit_short_text">Short text:</string>
+    <string name="hint_title">News title</string>
+    <string name="hint_short">Short text</string>
+    <string name="btn_save">save</string>
+    <string name="btn_edit">Edit</string>
+    <string name="hint_news_text">News text</string>
+    <string name="et_full_text">NewsText</string>
 </resources>

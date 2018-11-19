@@ -2,6 +2,8 @@ package org.supremus.sych.sychnews;
 
 import android.view.View;
 
+import org.supremus.sych.sychnews.tasks.LoadDataTask;
+
 public class NewsLoader {
 
     private static Boolean forceNet = false;

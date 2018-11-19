@@ -35,6 +35,8 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
         Activity activity = nda.get();
         if (activity!=null) {
             UIUpdater updater = (UIUpdater) activity;
+            NewsItemProvider nip = (NewsItemProvider) activity;
+            nip.setItem(newsItem);
             activity.runOnUiThread(() -> updater.updateUI(newsItem));
         }
     }
