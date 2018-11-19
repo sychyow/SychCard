@@ -41,17 +41,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
     public final static int MODE_PB = 0;
     public final static int MODE_RV = 1;
     public final static int MODE_ERR = 2;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        int id = NYTApi.getChangedId();
-        if (id > 0) {
-            new GetItemTask(this, id).execute();
-            NYTApi.setChangedId(-1);
-        }
-    }
-
     public final static int MODE_UPD = 3;
 
     private UITool tool;
@@ -101,6 +90,16 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
         errorText = findViewById(R.id.tv_error);
         btnRetry = findViewById(R.id.btnRetry);
         sp = findViewById(R.id.spin_newslist);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int id = NYTApi.getChangedId();
+        if (id > 0) {
+            new GetItemTask(this, id).execute();
+            NYTApi.setChangedId(-1);
+        }
     }
 
     @Override
@@ -167,8 +166,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         NYTApi.setCurrentSection(position);
-        pb.setVisibility(View.VISIBLE);
-        rv.setVisibility(View.GONE);
         NewsLoader.load(NewsListActivity.this);
     }
 
@@ -205,13 +202,12 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
             mode = m;
         }
 
-        UITool setNewsAdapter(NewsAdapter n) {
-            na = n; return this;
+        void setNewsAdapter(NewsAdapter n) {
+            na = n;
         }
 
-        UITool setErrorText(String s) {
+        void setErrorText(String s) {
             et = s;
-            return this;
         }
 
         @Override

@@ -26,8 +26,8 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     public static int TASK_DB = 1;
     public static int TASK_NETWORK = 2;
     private WeakReference<UITooler> wTooler;
-    boolean isUpdate;
-    int dataMode;
+    private boolean isUpdate;
+    private int dataMode;
     private final NewsDB db;
 
     public LoadDataTask(Activity activity, int mode, boolean update) {
@@ -67,11 +67,12 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     }
 
     private List<NewsItem> getNetworkData() {
-        TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
+        TopStoriesService svc = NYTApi.getTopStoriesService();
         List<NewsItem> data = null;
         try {
             Response<FeedDTO> response = svc.getStories(NYTApi.getCurrentSection()).execute();
             if (response.code()==200) {
+                assert response.body() != null;
                 data = NewsExtractor.extract(response.body());
             } else {
                 showError(SychApp.SYCHCONTEXT.getString(R.string.error_server) + response.toString());

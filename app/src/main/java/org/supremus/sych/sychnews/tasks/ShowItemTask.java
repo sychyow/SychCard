@@ -2,21 +2,18 @@ package org.supremus.sych.sychnews.tasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.supremus.sych.sychnews.NewsItemProvider;
 import org.supremus.sych.sychnews.UIUpdater;
 
+import java.lang.ref.WeakReference;
+
 public class ShowItemTask extends AsyncTask<Object,Void,Void> {
 
-    private NewsItemProvider nip;
-    private UIUpdater updater;
-    private Activity activity;
+    private WeakReference<Activity> wAct;
 
     public ShowItemTask(Activity activity) {
-        this.activity = activity;
-        this.nip = (NewsItemProvider) activity;
-        this.updater = (UIUpdater) activity;
+        wAct = new WeakReference<>(activity);
     }
 
     @Override
@@ -26,6 +23,9 @@ public class ShowItemTask extends AsyncTask<Object,Void,Void> {
     }
 
     private void fillUI() {
+        Activity activity = wAct.get();
+        if (activity==null) return;
+        NewsItemProvider nip = (NewsItemProvider) activity;
         while (nip.getItem()==null) {
             try {
                 Thread.sleep(100);
@@ -34,6 +34,7 @@ public class ShowItemTask extends AsyncTask<Object,Void,Void> {
             }
             fillUI();
         }
+        UIUpdater updater = (UIUpdater) activity;
         activity.runOnUiThread(() -> updater.updateUI(nip.getItem()));
     }
 }
