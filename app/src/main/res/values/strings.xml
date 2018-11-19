@@ -29,4 +29,5 @@
     <string name="btn_edit">Edit</string>
     <string name="hint_news_text">News text</string>
     <string name="et_full_text">NewsText</string>
+    <string name="logo">logo</string>
 </resources>
