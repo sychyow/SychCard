@@ -193,7 +193,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
     }
 
     class UITool implements Runnable {
-        private int mode;
+        private final int mode;
 
         private NewsAdapter na;
         private String et;

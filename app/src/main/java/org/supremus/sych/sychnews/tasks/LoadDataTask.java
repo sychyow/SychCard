@@ -23,7 +23,7 @@ import java.util.List;
 import retrofit2.Response;
 
 public class LoadDataTask extends AsyncTask<Object, Void, Void> {
-    public static int TASK_DB = 1;
+    public static final int TASK_DB = 1;
     public static int TASK_NETWORK = 2;
     private WeakReference<UITooler> wTooler;
     private boolean isUpdate;

@@ -58,7 +58,7 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
 
     }
 
-    public void makeViewer() {
+    private void makeViewer() {
         NewsViewFragment nvf = new NewsViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()

@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference;
 
 public class ShowItemTask extends AsyncTask<Object,Void,Void> {
 
-    private WeakReference<Activity> wAct;
+    private final WeakReference<Activity> wAct;
 
     public ShowItemTask(Activity activity) {
         wAct = new WeakReference<>(activity);

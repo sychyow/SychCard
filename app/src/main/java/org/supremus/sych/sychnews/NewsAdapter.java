@@ -34,9 +34,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     class ViewHolder extends RecyclerView.ViewHolder {
         final TextView Category;
         final ImageView Image;
-        TextView Header;
-        TextView Preview;
-        TextView Timestamp;
+        final TextView Header;
+        final TextView Preview;
+        final TextView Timestamp;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.tv_category);
@@ -66,7 +66,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         }
     }
 
-    private List<NewsItem> data;
+    private final List<NewsItem> data;
 
     public List<NewsItem> getData() { return data;}
 

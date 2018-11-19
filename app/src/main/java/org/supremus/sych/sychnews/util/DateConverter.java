@@ -1,10 +1,5 @@
 package org.supremus.sych.sychnews.util;
 
-import org.supremus.sych.sychnews.util.DataUtils;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import androidx.room.TypeConverter;

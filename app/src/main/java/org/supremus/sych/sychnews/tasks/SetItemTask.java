@@ -11,7 +11,7 @@ import org.supremus.sych.sychnews.util.NewsExtractor;
 
 public class SetItemTask extends AsyncTask<Object, Void, Void> {
     private final NewsDB db;
-    private NewsItem newsItem;
+    private final NewsItem newsItem;
 
     public SetItemTask(Activity nda, NewsItem newsItem) {
         this.newsItem = newsItem;

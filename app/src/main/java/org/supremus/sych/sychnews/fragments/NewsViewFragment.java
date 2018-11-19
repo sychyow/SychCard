@@ -5,10 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.supremus.sych.sychnews.NewsItemProvider;
-import org.supremus.sych.sychnews.UIUpdater;
-import org.supremus.sych.sychnews.tasks.GetItemTask;
-import org.supremus.sych.sychnews.NewsDetailActivity;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.tasks.ShowItemTask;
 
@@ -21,8 +17,7 @@ public class NewsViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_view, container, false);
-               return view;
+        return inflater.inflate(R.layout.fragment_news_view, container, false);
     }
 
     @Override

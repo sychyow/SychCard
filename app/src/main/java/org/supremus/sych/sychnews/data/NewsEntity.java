@@ -15,18 +15,18 @@ public class NewsEntity {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
-    public String title;
+    public final String title;
     @ColumnInfo(name="image_url")
-    public String imageUrl;
+    public final String imageUrl;
     public String section;
-    public String category;
+    public final String category;
     @ColumnInfo(name="publish_date")
     @TypeConverters({DateConverter.class})
-    public Date publishDate;
+    public final Date publishDate;
     @ColumnInfo(name="preview_text")
-    public String previewText;
+    public final String previewText;
     @ColumnInfo(name="full_text")
-    public String fullText;
+    public final String fullText;
 
 
     public NewsEntity(String title, String imageUrl, String category, Date publishDate, String previewText, String fullText) {

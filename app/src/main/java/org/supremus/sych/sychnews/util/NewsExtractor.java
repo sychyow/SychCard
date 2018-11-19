@@ -15,7 +15,7 @@ import java.util.Map;
 
 public final class NewsExtractor {
 
-    private static Map<String, Integer> Categories = new HashMap<>();
+    private static final Map<String, Integer> Categories = new HashMap<>();
 
     private static Category getCategory(String name) {
         if ( name == null||name.equals("")) return null;
@@ -37,7 +37,7 @@ public final class NewsExtractor {
     }
 
     public static List<NewsItem> extract(FeedDTO feed) {
-        List<NewsItem> news = new ArrayList<NewsItem>();
+        List<NewsItem> news = new ArrayList<>();
         Categories.clear();
         for (ResultDTO res:feed.getResults()){
             NewsItem item = new NewsItem(res.getTitle(), getImageUrl(res), getCategory(res.getSubsection()),
@@ -48,7 +48,7 @@ public final class NewsExtractor {
     }
 
     public static List<NewsItem> extract(List<NewsEntity> input) {
-        List<NewsItem> news = new ArrayList<NewsItem>();
+        List<NewsItem> news = new ArrayList<>();
         Categories.clear();
         for (NewsEntity ent:input){
             NewsItem item = makeItem(ent);

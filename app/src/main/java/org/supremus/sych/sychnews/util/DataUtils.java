@@ -144,6 +144,7 @@ public class DataUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
+    @SuppressWarnings("SameParameterValue")
     private static Date createDate(int year, int month, int date, int hrs, int min) {
         return new GregorianCalendar(year, month - 1, date, hrs, min).getTime();
     }
