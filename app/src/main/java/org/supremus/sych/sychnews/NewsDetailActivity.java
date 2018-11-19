@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.fragments.NewsEditFragment;
 import org.supremus.sych.sychnews.fragments.NewsViewFragment;
+import org.supremus.sych.sychnews.tasks.DelItemTask;
 import org.supremus.sych.sychnews.tasks.GetItemTask;
 import org.supremus.sych.sychnews.tasks.SetItemTask;
 import org.supremus.sych.sychnews.util.DataUtils;
@@ -51,6 +53,8 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
             setSupportActionBar(tb);
             btnEdit = findViewById(R.id.btn_edit);
             btnEdit.setOnClickListener(this);
+            ImageButton btnDelete = findViewById(R.id.btn_delete);
+            btnDelete.setOnClickListener(this);
             makeViewer();
             int newsId = getIntent().getIntExtra(NewsDetailActivity.EXTRA_ID, 0);
             new GetItemTask(this, newsId).execute();
@@ -95,20 +99,25 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
 
     @Override
     public void onClick(View v) {
-        switch (activityMode) {
-            case MODE_SHOW:
-                activityMode = MODE_EDIT;
-                btnEdit.setText(R.string.btn_save);
-                NewsEditFragment nef = new NewsEditFragment();
-                getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_details, nef, "NEWS_EDIT")
-                    .commit();
-                break;
-            case MODE_EDIT:
-                activityMode = MODE_SHOW;
-                btnEdit.setText(R.string.btn_edit);
-                updateData();
+        if (v.getId()==R.id.btn_edit) {
+            switch (activityMode) {
+                case MODE_SHOW:
+                    activityMode = MODE_EDIT;
+                    btnEdit.setText(R.string.btn_save);
+                    NewsEditFragment nef = new NewsEditFragment();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame_details, nef, "NEWS_EDIT")
+                            .commit();
+                    break;
+                case MODE_EDIT:
+                    activityMode = MODE_SHOW;
+                    btnEdit.setText(R.string.btn_edit);
+                    updateData();
+            }
+        }
+        if (v.getId()==R.id.btn_delete) {
+            new DelItemTask(this, currentItem).execute();
         }
     }
 

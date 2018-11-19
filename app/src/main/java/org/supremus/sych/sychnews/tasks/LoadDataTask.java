@@ -54,7 +54,7 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     }
 
     private List<NewsItem> loadFromDB() {
-        List<NewsEntity> rawData = db.newsDAO().getNewsBySection(NYTApi.getCurrentSection());
+        List<NewsEntity> rawData = db.newsDAO().getNewsBySection(NYTApi.getInstance().getCurrentSection());
         return NewsExtractor.extract(rawData);
     }
 
@@ -67,7 +67,7 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     }
 
     private List<NewsItem> getNetworkData() {
-        TopStoriesService svc = NYTApi.getTopStoriesService();
+        TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
         List<NewsItem> data = null;
         try {
             Response<FeedDTO> response = svc.getStories(NYTApi.getCurrentSection()).execute();

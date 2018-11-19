@@ -47,6 +47,7 @@ public final class NYTApi {
     private static String currentSection = "world";
     private static boolean enabled = false;
     private static int changedId = -1;
+    private static int removedId = -1;
 
 
     public static synchronized NYTApi getInstance() {
@@ -104,6 +105,14 @@ public final class NYTApi {
 
     public static int getChangedId() {
         return changedId;
+    }
+
+    public static void setRemovedId(int removedId) {
+        NYTApi.removedId = removedId;
+    }
+
+    public static int getRemovedId() {
+        return removedId;
     }
 
     @NonNull

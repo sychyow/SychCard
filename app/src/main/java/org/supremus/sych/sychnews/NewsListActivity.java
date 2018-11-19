@@ -100,6 +100,22 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
             new GetItemTask(this, id).execute();
             NYTApi.setChangedId(-1);
         }
+        id = NYTApi.getRemovedId();
+        if (id>0) {
+            removeItem(id);
+        }
+    }
+
+    private void removeItem(int id) {
+        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
+        List<NewsItem> ln  = (na).getData();
+        for (int i=0; i<ln.size(); i++) {
+            if (ln.get(i).getId()==id) {
+                ln.remove(i);
+                na.notifyItemRemoved(i);
+                break;
+            }
+        }
     }
 
     @Override

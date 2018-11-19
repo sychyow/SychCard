@@ -34,6 +34,19 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
 
+                <ImageButton
+                    android:id="@+id/btn_delete"
+                    android:layout_width="@dimen/bin_icon_size"
+                    android:layout_height="@dimen/bin_icon_size"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginStart="@dimen/small_text_size"
+                    android:layout_marginEnd="@dimen/small_text_size"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/delete"
+                    android:contentDescription="@string/delete" />
+
                 <Button
                     android:id="@+id/btn_edit"
                     android:layout_width="wrap_content"
@@ -41,7 +54,9 @@
                     android:layout_gravity="center_vertical|end"
                     android:background="?android:attr/selectableItemBackground"
                     android:text="@string/btn_edit" />
+
             </androidx.appcompat.widget.Toolbar>
+
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
