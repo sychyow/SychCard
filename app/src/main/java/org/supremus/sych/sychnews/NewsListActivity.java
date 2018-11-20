@@ -244,7 +244,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
                     break;
                 case MODE_UPD:
                     getRv().setVisibility(View.VISIBLE);
-                    getRv().getAdapter().notifyDataSetChanged();
+                    NewsAdapter newsAdapter = (NewsAdapter) getRv().getAdapter();
+                    newsAdapter.setData(na.getData());
+                    newsAdapter.notifyDataSetChanged();
                     break;
             }
 

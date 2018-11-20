@@ -63,6 +63,7 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
         NewsEntity news[] = new NewsEntity[data.size()];
         for (int i=0; i<data.size(); i++)
             news[i] = NewsExtractor.makeEntity(data.get(i));
+        db.newsDAO().deleteSection(NYTApi.getCurrentSection());
         db.newsDAO().insertAll(news);
     }
 
@@ -91,13 +92,15 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
         UITooler tooler = wTooler.get();
         if (tooler!=null) {
             NewsAdapter na = new NewsAdapter(data);
-            tooler.getUITool(NewsListActivity.MODE_RV)
+            int mode;
+            if (isUpdate)
+                mode = NewsListActivity.MODE_UPD;
+            else
+                mode = NewsListActivity.MODE_RV;
+            tooler.getUITool(mode)
                     .setNewsAdapter(na)
                     .apply();
-            if (isUpdate) {
-                tooler.getUITool(NewsListActivity.MODE_UPD)
-                        .apply();
-            }
+
         }
     }
 

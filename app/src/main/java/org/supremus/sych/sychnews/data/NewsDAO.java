@@ -34,4 +34,7 @@ public interface NewsDAO {
 
     @Query("DELETE from news")
     void deleteAll();
+
+    @Query("DELETE from news where section = :sectionName")
+    void deleteSection(String sectionName);
 }
