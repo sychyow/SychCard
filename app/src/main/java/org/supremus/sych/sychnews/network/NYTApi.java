@@ -1,9 +1,10 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.nio.file.SecureDirectoryStream;
+import org.supremus.sych.sychnews.util.DataUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +45,9 @@ public final class NYTApi {
     private static NYTApi nytApi;
     private static TopStoriesService topStoriesService;
     private static String currentSection = "world";
+    private static boolean enabled = false;
+    private static int changedId = -1;
+    private static int removedId = -1;
 
 
     public static synchronized NYTApi getInstance() {
@@ -87,10 +91,34 @@ public final class NYTApi {
         return currentSection;
     }
 
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(boolean enabled) {
+        NYTApi.enabled = enabled;
+    }
+
+    public static void setChangedId(int id) {
+        changedId = id;
+    }
+
+    public static int getChangedId() {
+        return changedId;
+    }
+
+    public static void setRemovedId(int removedId) {
+        NYTApi.removedId = removedId;
+    }
+
+    public static int getRemovedId() {
+        return removedId;
+    }
+
     @NonNull
     private Retrofit buildRetrofitClient(@NonNull OkHttpClient client) {
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+                .setDateFormat(DataUtils.DATE_FORMAT)
                 .create();
 
         return new Retrofit.Builder()

@@ -9,13 +9,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import org.supremus.sych.sychnews.data.Category;
+import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.util.DataUtils;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Response;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
     private static final String TAG = "SychNews.NewsAdapter";
@@ -33,9 +34,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     class ViewHolder extends RecyclerView.ViewHolder {
         final TextView Category;
         final ImageView Image;
-        TextView Header;
-        TextView Preview;
-        TextView Timestamp;
+        final TextView Header;
+        final TextView Preview;
+        final TextView Timestamp;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.tv_category);
@@ -46,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         }
 
         void bind(NewsItem item) {
-            Category cat = item.getCategory();
+            org.supremus.sych.sychnews.data.Category cat = item.getCategory();
             if (cat!=null) {
                 Category.setText(cat.getName());
             } else {
@@ -65,11 +66,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         }
     }
 
-    private List<NewsItem> data;
+    private final List<NewsItem> data;
 
     public List<NewsItem> getData() { return data;}
 
-    NewsAdapter(List<NewsItem> news) {
+    public void setData(List<NewsItem> newData) {
+        data.clear();
+        data.addAll(newData);
+    }
+
+
+
+    public NewsAdapter(List<NewsItem> news) {
         data = news;
     }
 

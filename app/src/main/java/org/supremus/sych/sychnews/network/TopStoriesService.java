@@ -1,4 +1,6 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.network;
+
+import org.supremus.sych.sychnews.data.FeedDTO;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

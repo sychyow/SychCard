@@ -1,67 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.core.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
+        android:id="@+id/frame_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".NewsDetailActivity">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <ImageView
-                android:id="@+id/iv_news_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/bottom_margin"
-                android:scaleType="centerInside"
-                tools:layout_height="128dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-            <TextView
-                android:id="@+id/tv_news_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_margin"
-                android:layout_marginEnd="@dimen/base_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textSize="@dimen/text_header_size"
-                android:textStyle="bold"
-                tools:text="@tools:sample/full_names" />
-
-            <TextView
-                android:id="@+id/tv_news_timestamp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_margin"
-                android:layout_marginEnd="@dimen/base_margin"
-                android:layout_marginBottom="@dimen/bottom_margin"
-                android:paddingStart="@dimen/text_padding"
-                android:paddingEnd="@dimen/text_padding"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="@dimen/small_text_size"
-                android:textStyle="italic"
-                tools:text="@tools:sample/date/mmddyy" />
-
-            <TextView
-                android:id="@+id/tv_news_text"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/base_margin"
-                android:layout_marginEnd="@dimen/base_margin"
-                android:layout_weight="1"
-                tools:text="@string/curriculum_vitae" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -72,10 +20,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbar_height"
+            android:layout_gravity="center"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:expandedTitleMarginTop="@dimen/title_margin"
             app:expandedTitleMarginStart="@dimen/title_margin"
+            app:expandedTitleMarginTop="@dimen/title_margin"
             app:expandedTitleTextAppearance="@android:style/TextAppearance.Material.Title"
             app:layout_scrollFlags="scroll|snap|enterAlways">
 
@@ -83,7 +32,31 @@
                 android:id="@+id/sych_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin">
+
+                <ImageButton
+                    android:id="@+id/btn_delete"
+                    android:layout_width="@dimen/bin_icon_size"
+                    android:layout_height="@dimen/bin_icon_size"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginStart="@dimen/small_text_size"
+                    android:layout_marginEnd="@dimen/small_text_size"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/delete"
+                    android:contentDescription="@string/delete" />
+
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/btn_edit" />
+
+            </androidx.appcompat.widget.Toolbar>
+
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

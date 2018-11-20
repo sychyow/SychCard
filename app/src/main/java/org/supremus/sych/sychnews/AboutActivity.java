@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.supremus.sych.sychnews.util.MailSender;
+
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MailSender ms;

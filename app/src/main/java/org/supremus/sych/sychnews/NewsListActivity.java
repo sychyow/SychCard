@@ -1,17 +1,12 @@
 package org.supremus.sych.sychnews;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Response;
 
-import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -25,22 +20,30 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.network.NYTApi;
+import org.supremus.sych.sychnews.tasks.GetItemTask;
+
 import java.util.List;
 
 
-public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class NewsListActivity extends AppCompatActivity implements NewsItemProvider,View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
 
     private RecyclerView rv;
     private ProgressBar pb;
     private LinearLayout errorPanel;
     private TextView errorText;
     private Button btnRetry;
-    private Button btnSection;
     private Toolbar tb;
     private Spinner sp;
+
+
+    public final static int MODE_PB = 0;
+    public final static int MODE_RV = 1;
+    public final static int MODE_ERR = 2;
+    public final static int MODE_UPD = 3;
+
+    private UITool tool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +51,15 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_news_list);
         findViews();
         btnRetry.setOnClickListener(this);
-        btnSection.setOnClickListener(this);
-        btnSection.setText(NYTApi.getCurrentSection());
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
-        new LoadDataTask(this, false).execute();
+        NewsLoader.load(this);
     }
 
     private void initSpinner() {
-        ArrayAdapter<CharSequence> aa = new ArrayAdapter<CharSequence>(
+        ArrayAdapter<CharSequence> aa = new ArrayAdapter<>(
                 this,
                 R.layout.sections_spinner,
                 NYTApi.getSectionNames());
@@ -81,24 +82,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    void showSectionDlg() {
-        AlertDialog.Builder adBuilder = new AlertDialog.Builder(this);
-        adBuilder.setTitle(getString(R.string.select_theme));
-        adBuilder.setSingleChoiceItems(NYTApi.getSectionNames(), NYTApi.getSelectedIndex(), new DialogInterface
-                .OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                NYTApi.setCurrentSection(item);
-                pb.setVisibility(View.VISIBLE);
-                rv.setVisibility(View.GONE);
-                new LoadDataTask(NewsListActivity.this, true).execute();
-                btnSection.setText(NYTApi.getCurrentSection());
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = adBuilder.create();
-        alert.show();
-    }
-
     private void findViews() {
         tb = findViewById(R.id.sych_toolbar);
         rv = findViewById(R.id.rv_root);
@@ -106,8 +89,33 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         errorPanel = findViewById(R.id.errorPanel);
         errorText = findViewById(R.id.tv_error);
         btnRetry = findViewById(R.id.btnRetry);
-        btnSection = findViewById(R.id.btn_section);
         sp = findViewById(R.id.spin_newslist);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int id = NYTApi.getChangedId();
+        if (id > 0) {
+            new GetItemTask(this, id).execute();
+            NYTApi.setChangedId(-1);
+        }
+        id = NYTApi.getRemovedId();
+        if (id>0) {
+            removeItem(id);
+        }
+    }
+
+    private void removeItem(int id) {
+        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
+        List<NewsItem> ln  = (na).getData();
+        for (int i=0; i<ln.size(); i++) {
+            if (ln.get(i).getId()==id) {
+                ln.remove(i);
+                na.notifyItemRemoved(i);
+                break;
+            }
+        }
     }
 
     @Override
@@ -122,6 +130,11 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
             case R.id.menu_about:
                 AboutActivity.launch(this);
                 return true;
+            case R.id.menu_update: {
+                NewsLoader.setUpdate(true);
+                NewsLoader.forceNetwork();
+                NewsLoader.load(this);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,29 +143,46 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         return rv;
     }
 
-    public UITool getUITool(int mode) {
-        return new UITool(mode);
+    public ProgressBar getPb() {
+        return pb;
+    }
+
+    @Override
+    public UITooler getUITool(int mode) {
+         tool = new UITool(mode);
+         return this;
+    }
+
+    @Override
+    public UITooler setNewsAdapter(NewsAdapter na) {
+        tool.setNewsAdapter(na);
+        return this;
+    }
+
+    @Override
+    public UITooler setErrorText(String msg) {
+        tool.setErrorText(msg);
+        return this;
+    }
+
+    @Override
+    public void apply() {
+        runOnUiThread(tool);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnRetry) {
             errorPanel.setVisibility(View.GONE);
-            pb.setVisibility(View.VISIBLE);
-            new LoadDataTask(this, false).execute();
-        }
-
-        if (v.getId() == R.id.btn_section) {
-            showSectionDlg();
+            NewsLoader.forceNetwork();
+            NewsLoader.load(this);
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         NYTApi.setCurrentSection(position);
-        pb.setVisibility(View.VISIBLE);
-        rv.setVisibility(View.GONE);
-        new LoadDataTask(NewsListActivity.this, true).execute();
+        NewsLoader.load(NewsListActivity.this);
     }
 
     @Override
@@ -160,12 +190,26 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private class UITool implements Runnable {
-        private final static int MODE_PB = 0;
-        private final static int MODE_RV = 1;
-        private final static int MODE_ERR = 2;
-        private final static int MODE_UPD = 3;
-        private int mode;
+    @Override
+    public NewsItem getItem() {
+        return null;
+    }
+
+    @Override
+    public void setItem(NewsItem val) {
+        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
+        List<NewsItem> ln  = (na).getData();
+        for (int i=0; i<ln.size(); i++) {
+            if (ln.get(i).getId()==val.getId()) {
+                ln.set(i, val);
+                na.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    class UITool implements Runnable {
+        private final int mode;
 
         private NewsAdapter na;
         private String et;
@@ -174,13 +218,12 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
             mode = m;
         }
 
-        UITool setNewsAdapter(NewsAdapter n) {
-            na = n; return this;
+        void setNewsAdapter(NewsAdapter n) {
+            na = n;
         }
 
-        UITool setErrorText(String s) {
+        void setErrorText(String s) {
             et = s;
-            return this;
         }
 
         @Override
@@ -192,6 +235,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                 case MODE_RV:
                     getRv().setAdapter(na);
                     getRv().setHasFixedSize(true);
+                    getRv().setVisibility(View.VISIBLE);
                     break;
                 case MODE_ERR:
                     pb.setVisibility(View.GONE);
@@ -200,82 +244,12 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
                     break;
                 case MODE_UPD:
                     getRv().setVisibility(View.VISIBLE);
-                    getRv().getAdapter().notifyDataSetChanged();
+                    NewsAdapter newsAdapter = (NewsAdapter) getRv().getAdapter();
+                    newsAdapter.setData(na.getData());
+                    newsAdapter.notifyDataSetChanged();
                     break;
             }
 
-        }
-    }
-
-    private static class LoadDataTask extends AsyncTask<Object, Void, Void> {
-        private WeakReference<NewsListActivity> nla;
-        boolean isUpdate;
-
-         LoadDataTask(NewsListActivity activity, boolean update) {
-            this.nla = new WeakReference<>(activity);
-            isUpdate = update;
-        }
-        @Override
-        protected Void doInBackground(Object[] objects) {
-            TopStoriesService svc = NYTApi.getInstance().getTopStoriesService();
-            List<NewsItem> data = new ArrayList<>();
-            try {
-                Response<FeedDTO> response = svc.getStories(NYTApi.getCurrentSection()).execute();
-                if (response.code()==200) {
-                    data = NewsExtractor.extract(response.body());
-                } else {
-                    showError(SychApp.SYCHCONTEXT.getString(R.string.error_server) + response.toString());
-                }
-            } catch (IOException e) {
-                showError(SychApp.SYCHCONTEXT.getString(R.string.error_network) + e.getLocalizedMessage());
-                return null;
-            }
-            if (isUpdate) {
-                updateData(data);
-            } else {
-                setData(data);
-            }
-            return null;
-        }
-
-        private void updateData(List<NewsItem> data) {
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                NewsAdapter na = new NewsAdapter(data);
-                UITool runner = activity.getUITool(UITool.MODE_RV)
-                        .setNewsAdapter(na);
-                activity.runOnUiThread(runner);
-                runner = activity.getUITool(UITool.MODE_UPD);
-                activity.runOnUiThread(runner);
-            }
-         }
-
-        private void setData(List<NewsItem> data) {
-            NewsAdapter na = new NewsAdapter(data);
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                UITool runner = activity.getUITool(UITool.MODE_RV)
-                                .setNewsAdapter(na);
-                activity.runOnUiThread(runner);
-            }
-        }
-
-        private void showError(String msg) {
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                UITool runner = activity.getUITool(UITool.MODE_ERR)
-                                .setErrorText(msg);
-                activity.runOnUiThread(runner);
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void res) {
-            super.onPostExecute(res);
-            NewsListActivity activity = nla.get();
-            if (activity!=null) {
-                activity.runOnUiThread(activity.getUITool(UITool.MODE_PB));
-            }
         }
     }
 

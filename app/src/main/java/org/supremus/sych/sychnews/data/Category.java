@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

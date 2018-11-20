@@ -1,6 +1,9 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.util;
 
 import android.widget.TextView;
+
+import org.supremus.sych.sychnews.data.Category;
+import org.supremus.sych.sychnews.data.NewsItem;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -9,7 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-class DataUtils {
+public class DataUtils {
 
     public static List<NewsItem> generateNews() {
         final Category darwinAwards = new Category(1, "Darwin Awards");
@@ -139,6 +142,9 @@ class DataUtils {
         return news;
     }
 
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX";
+
+    @SuppressWarnings("SameParameterValue")
     private static Date createDate(int year, int month, int date, int hrs, int min) {
         return new GregorianCalendar(year, month - 1, date, hrs, min).getTime();
     }
@@ -149,7 +155,7 @@ class DataUtils {
         tv.setText(df.format(d));
     }
 
-    static String capitaliseFL(String src) {
+    public static String capitaliseFL(String src) {
         if (src==null) return null;
         return src.substring(0, 1).toUpperCase()+src.substring(1);
     }

@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class NewsItem implements Parcelable {
 
+    private int id;
     private final String title;
     private final String imageUrl;
     private final Category category;
@@ -14,7 +15,7 @@ public class NewsItem implements Parcelable {
     private final String previewText;
     private final String fullText;
 
-    NewsItem(String title, String imageUrl, Category category, Date publishDate, String previewText, String fullText) {
+    public NewsItem(String title, String imageUrl, Category category, Date publishDate, String previewText, String fullText) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.category = category;
@@ -84,4 +85,12 @@ public class NewsItem implements Parcelable {
             return new NewsItem[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
