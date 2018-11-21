@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +14,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +24,13 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.supremus.sych.sychnews.MainActivity;
+import org.supremus.sych.sychnews.interfaces.ModeSetter;
+import org.supremus.sych.sychnews.NewsAdapter;
+import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
+import org.supremus.sych.sychnews.NewsLoader;
+import org.supremus.sych.sychnews.R;
+import org.supremus.sych.sychnews.interfaces.UITooler;
 import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.tasks.GetItemTask;

@@ -1,13 +1,12 @@
 package org.supremus.sych.sychnews.tasks;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.NewsAdapter;
-import org.supremus.sych.sychnews.NewsListFragment;
+import org.supremus.sych.sychnews.fragments.NewsListFragment;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.SychApp;
-import org.supremus.sych.sychnews.UITooler;
+import org.supremus.sych.sychnews.interfaces.UITooler;
 import org.supremus.sych.sychnews.data.FeedDTO;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;

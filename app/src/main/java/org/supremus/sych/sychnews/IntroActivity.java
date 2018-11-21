@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.supremus.sych.sychnews.fragments.IntroFragments;
+import org.supremus.sych.sychnews.fragments.NewsListFragment;
 
 public class IntroActivity extends AppCompatActivity {
 

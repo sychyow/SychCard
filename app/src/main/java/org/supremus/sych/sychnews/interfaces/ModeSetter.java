@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.interfaces;
 
 public interface ModeSetter {
     void setMode(int mode);

@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ModeSetter{
+import org.supremus.sych.sychnews.fragments.NewsListFragment;
+import org.supremus.sych.sychnews.interfaces.ModeSetter;
+
+public class MainActivity extends AppCompatActivity implements ModeSetter {
 
     public static final int MODE_LIST = 0;
     public static final int MODE_SHOW = 1;

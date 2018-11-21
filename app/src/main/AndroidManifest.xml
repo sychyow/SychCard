@@ -19,15 +19,9 @@
             android:label="@string/full_name"
             android:theme="@style/Sych.News.Theme.NoBar" />
         <activity
-            android:name=".NewsListFragment"
-            android:theme="@style/Sych.News.Theme.NoBar" />
-        <activity
             android:name=".IntroActivity"
             android:theme="@style/Sych.News.Theme.NoBar">
         </activity>
-        <activity
-            android:name=".NewsDetailFragment"
-            android:theme="@style/Sych.News.Theme.NoBar" />
         <activity android:name=".MainActivity"
             android:theme="@style/Sych.News.Theme.NoBar">
             <intent-filter>

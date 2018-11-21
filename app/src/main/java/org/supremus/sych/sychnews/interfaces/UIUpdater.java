@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.interfaces;
 
 import org.supremus.sych.sychnews.data.NewsItem;
 

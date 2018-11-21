@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import org.supremus.sych.sychnews.NewsItemProvider;
+import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.data.NewsItem;
 

@@ -1,4 +1,4 @@
-package org.supremus.sych.sychnews;
+package org.supremus.sych.sychnews.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +19,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.supremus.sych.sychnews.MainActivity;
+import org.supremus.sych.sychnews.interfaces.ModeSetter;
+import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
+import org.supremus.sych.sychnews.R;
+import org.supremus.sych.sychnews.interfaces.UIUpdater;
 import org.supremus.sych.sychnews.data.NewsItem;
-import org.supremus.sych.sychnews.fragments.NewsEditFragment;
-import org.supremus.sych.sychnews.fragments.NewsViewFragment;
 import org.supremus.sych.sychnews.tasks.DelItemTask;
 import org.supremus.sych.sychnews.tasks.GetItemTask;
 import org.supremus.sych.sychnews.tasks.SetItemTask;

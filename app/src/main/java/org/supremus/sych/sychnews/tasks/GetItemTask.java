@@ -1,9 +1,8 @@
 package org.supremus.sych.sychnews.tasks;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
-import org.supremus.sych.sychnews.NewsItemProvider;
+import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
 import org.supremus.sych.sychnews.data.NewsItem;
