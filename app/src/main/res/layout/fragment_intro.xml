@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_intro"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/logo"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/text_welcome"
+        app:layout_constraintStart_toStartOf="@+id/text_welcome"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/screenshot" />
+</LinearLayout>

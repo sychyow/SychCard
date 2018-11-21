@@ -1,16 +1,21 @@
 package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.Completable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
+import me.relex.circleindicator.CircleIndicator;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.TextView;
 
-import java.util.concurrent.TimeUnit;
+import org.supremus.sych.sychnews.fragments.IntroFragments;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -19,20 +24,55 @@ public class IntroActivity extends AppCompatActivity {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+
+    public static class IntroPagerAdapter extends FragmentPagerAdapter {
+        private static final int NUM_PAGES = 3;
+
+        public IntroPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return IntroFragments.newInstance(R.drawable.screenshot);
+                case 1:
+                    return IntroFragments.newInstance(R.drawable.screen_details);
+                case 2:
+                    return IntroFragments.newInstance(R.drawable.screen_about);
+            }
+            return null;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (needIntro()) {
             setContentView(R.layout.activity_intro);
-            Disposable disposable = Completable.complete()
-                    .delay(3, TimeUnit.SECONDS)
-                    .subscribe(this::startSecondActivity);
-            compositeDisposable.add(disposable);
+            ViewPager pager = findViewById(R.id.intro_pager);
+            IntroPagerAdapter pagerAdapter = new IntroPagerAdapter(getSupportFragmentManager());
+            pager.setAdapter(pagerAdapter);
+            CircleIndicator ci = findViewById(R.id.cindicator);
+            ci.setViewPager(pager);
+
+            TextView welcome = findViewById(R.id.text_welcome);
+            welcome.setOnClickListener(this::startSecondActivity);
         } else {
             startSecondActivity();
         }
         updatePref();
+    }
+
+    private void startSecondActivity(View view) {
+        startSecondActivity();
     }
 
     private boolean needIntro() {
@@ -48,7 +88,7 @@ public class IntroActivity extends AppCompatActivity {
         ed.apply();
     }
 
-    private void startSecondActivity() {
+    void startSecondActivity() {
         startActivity(new Intent(this, NewsListActivity.class));
         finish();
     }
