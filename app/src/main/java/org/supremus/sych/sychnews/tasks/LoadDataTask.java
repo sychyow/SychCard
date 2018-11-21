@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.NewsAdapter;
-import org.supremus.sych.sychnews.NewsListActivity;
+import org.supremus.sych.sychnews.NewsListFragment;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.SychApp;
 import org.supremus.sych.sychnews.UITooler;
@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
 import retrofit2.Response;
 
 public class LoadDataTask extends AsyncTask<Object, Void, Void> {
@@ -30,9 +31,9 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     private int dataMode;
     private final NewsDB db;
 
-    public LoadDataTask(Activity activity, int mode, boolean update) {
-        wTooler = new WeakReference<>((UITooler) activity);
-        db = NewsDB.getAppDatabase(activity);
+    public LoadDataTask(Fragment fragment, int mode, boolean update) {
+        wTooler = new WeakReference<>((UITooler) fragment);
+        db = NewsDB.getAppDatabase(fragment.getActivity());
         isUpdate = update;
         dataMode = mode;
     }
@@ -94,9 +95,9 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
             NewsAdapter na = new NewsAdapter(data);
             int mode;
             if (isUpdate)
-                mode = NewsListActivity.MODE_UPD;
+                mode = NewsListFragment.MODE_UPD;
             else
-                mode = NewsListActivity.MODE_RV;
+                mode = NewsListFragment.MODE_RV;
             tooler.getUITool(mode)
                     .setNewsAdapter(na)
                     .apply();
@@ -107,7 +108,7 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     private void showError(String msg) {
         UITooler tooler = wTooler.get();
         if (tooler!=null) {
-            tooler.getUITool(NewsListActivity.MODE_ERR)
+            tooler.getUITool(NewsListFragment.MODE_ERR)
                     .setErrorText(msg)
                     .apply();
         }
@@ -118,7 +119,7 @@ public class LoadDataTask extends AsyncTask<Object, Void, Void> {
         super.onPostExecute(res);
         UITooler tooler = wTooler.get();
         if (tooler!=null) {
-            tooler.getUITool(NewsListActivity.MODE_PB).apply();
+            tooler.getUITool(NewsListFragment.MODE_PB).apply();
         }
     }
 }

@@ -1,7 +1,10 @@
 package org.supremus.sych.sychnews;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,7 +32,7 @@ import org.supremus.sych.sychnews.tasks.GetItemTask;
 import java.util.List;
 
 
-public class NewsListActivity extends AppCompatActivity implements NewsItemProvider,View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
+public class NewsListFragment extends Fragment implements NewsItemProvider,View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
 
     private RecyclerView rv;
     private ProgressBar pb;
@@ -44,100 +49,92 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
     public final static int MODE_UPD = 3;
 
     private UITool tool;
+    private View v;
+
+    public NewsListFragment() {
+        tool = null;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
+        v = inflater.inflate(R.layout.activity_news_list, container, false);
         findViews();
         btnRetry.setOnClickListener(this);
-        setSupportActionBar(tb);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        AppCompatActivity aca = (AppCompatActivity) getActivity();
+        aca.setSupportActionBar(tb);
+        aca.getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
         NewsLoader.load(this);
+        return v;
     }
 
     private void initSpinner() {
         ArrayAdapter<CharSequence> aa = new ArrayAdapter<>(
-                this,
+                getActivity(),
                 R.layout.sections_spinner,
-                NYTApi.getSectionNames());
+                NYTApi.getInstance().getSectionNames());
         sp.setAdapter(aa);
         sp.setOnItemSelectedListener(this);
         sp.setSelection(NYTApi.getSelectedIndex());
     }
 
     private void setOrientation() {
-        int orientation = getResources().getConfiguration().orientation;
+        int orientation = getContext().getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayoutManager llm = new LinearLayoutManager(this);
+            LinearLayoutManager llm = new LinearLayoutManager(getContext());
             getRv().setLayoutManager(llm);
         } else {
-            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
             float dhWidth = displayMetrics.widthPixels / displayMetrics.density;
             int colNum = (int) Math.floor(dhWidth / 300.0);
-            GridLayoutManager glm = new GridLayoutManager(this, colNum);
+            GridLayoutManager glm = new GridLayoutManager(getContext(), colNum);
             getRv().setLayoutManager(glm);
         }
     }
 
     private void findViews() {
-        tb = findViewById(R.id.sych_toolbar);
-        rv = findViewById(R.id.rv_root);
-        pb = findViewById(R.id.progressbar);
-        errorPanel = findViewById(R.id.errorPanel);
-        errorText = findViewById(R.id.tv_error);
-        btnRetry = findViewById(R.id.btnRetry);
-        sp = findViewById(R.id.spin_newslist);
+        tb = v.findViewById(R.id.sych_toolbar);
+        rv = v.findViewById(R.id.rv_root);
+        pb = v.findViewById(R.id.progressbar);
+        errorPanel = v.findViewById(R.id.errorPanel);
+        errorText = v.findViewById(R.id.tv_error);
+        btnRetry = v.findViewById(R.id.btnRetry);
+        sp = v.findViewById(R.id.spin_newslist);
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         int id = NYTApi.getChangedId();
         if (id > 0) {
-            new GetItemTask(this, id).execute();
+            new GetItemTask(getActivity(), id).execute();
             NYTApi.setChangedId(-1);
         }
         id = NYTApi.getRemovedId();
         if (id>0) {
             removeItem(id);
+            NYTApi.setRemovedId(-1);
         }
     }
 
     private void removeItem(int id) {
-        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
-        List<NewsItem> ln  = (na).getData();
-        for (int i=0; i<ln.size(); i++) {
-            if (ln.get(i).getId()==id) {
-                ln.remove(i);
-                na.notifyItemRemoved(i);
+        NewsAdapter newsAdapter = (NewsAdapter)getRv().getAdapter();
+        if (newsAdapter==null) return;
+        List<NewsItem> itemList  = (newsAdapter).getData();
+        for (int i=0; i<itemList.size(); i++) {
+            if (itemList.get(i).getId()==id) {
+                itemList.remove(i);
+                newsAdapter.notifyItemRemoved(i);
                 break;
             }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_about:
-                AboutActivity.launch(this);
-                return true;
-            case R.id.menu_update: {
-                NewsLoader.setUpdate(true);
-                NewsLoader.forceNetwork();
-                NewsLoader.load(this);
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+
 
     public RecyclerView getRv() {
         return rv;
@@ -167,7 +164,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
 
     @Override
     public void apply() {
-        runOnUiThread(tool);
+        getActivity().runOnUiThread(tool);
     }
 
     @Override
@@ -182,7 +179,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemProvi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         NYTApi.setCurrentSection(position);
-        NewsLoader.load(NewsListActivity.this);
+        NewsLoader.load(NewsListFragment.this);
     }
 
     @Override

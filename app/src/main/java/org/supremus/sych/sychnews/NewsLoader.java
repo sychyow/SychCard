@@ -12,7 +12,7 @@ public class NewsLoader {
 
     public static void forceNetwork() { forceNet = true; }
 
-    public static void load(NewsListActivity nla) {
+    public static void load(NewsListFragment nla) {
         nla.getRv().setVisibility(View.GONE);
         nla.getPb().setVisibility(View.VISIBLE);
         int mode = forceNet ? LoadDataTask.TASK_NETWORK : LoadDataTask.TASK_DB;

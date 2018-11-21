@@ -89,7 +89,7 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     void startSecondActivity() {
-        startActivity(new Intent(this, NewsListActivity.class));
+        startActivity(new Intent(this, NewsListFragment.class));
         finish();
     }
 
