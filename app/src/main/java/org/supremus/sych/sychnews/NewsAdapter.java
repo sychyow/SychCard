@@ -16,6 +16,7 @@ import org.supremus.sych.sychnews.util.DataUtils;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements View.OnClickListener {
@@ -28,7 +29,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     public void onClick(View v) {
         RecyclerView rv = (RecyclerView) v.getParent();
         int pos = rv.getChildLayoutPosition(v);
-        NewsDetailActivity.launch(rv.getContext(), data.get(pos));
+        NewsDetailFragment ndf = NewsDetailFragment.newInstance(data.get(pos).getId());
+        ((FragmentActivity) v.getContext()).getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_list, ndf, "NEWS_DETAIL")
+                .addToBackStack("DETAIL")
+                .commit();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

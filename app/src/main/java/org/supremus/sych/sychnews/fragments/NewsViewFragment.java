@@ -23,7 +23,7 @@ public class NewsViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        new ShowItemTask(getActivity()).execute();
+        new ShowItemTask(getParentFragment()).execute();
     }
 
 

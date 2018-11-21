@@ -1,12 +1,19 @@
 package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int MODE_LIST = 0;
+    private static final int MODE_SHOW = 1;
+    private static final int MODE_EDIT = 2;
+    private int activityMode = MODE_LIST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +55,11 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+        int index = getSupportFragmentManager().getBackStackEntryCount() - 1;
+        FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(index);
+        String tag = backEntry.getName();
+        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
+        if (fragment==null||fragment.getChildFragmentManager().getBackStackEntryCount()<=1)
+            getSupportFragmentManager().popBackStack();
     }
 }

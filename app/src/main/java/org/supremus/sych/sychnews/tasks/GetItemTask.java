@@ -11,15 +11,17 @@ import org.supremus.sych.sychnews.util.NewsExtractor;
 
 import java.lang.ref.WeakReference;
 
+import androidx.fragment.app.Fragment;
+
 public class GetItemTask extends AsyncTask<Object, Void, Void> {
-    private final WeakReference<Activity> nda;
+    private final WeakReference<Fragment> nda;
     private final NewsDB db;
     private final int newsId;
     private NewsItem newsItem;
 
-    public GetItemTask(Activity activity, int newsId) {
-        this.nda = new WeakReference<>(activity);
-        db = NewsDB.getAppDatabase(activity);
+    public GetItemTask(Fragment fragment, int newsId) {
+        this.nda = new WeakReference<>(fragment);
+        db = NewsDB.getAppDatabase(fragment.getActivity());
         this.newsId = newsId;
     }
 
@@ -33,9 +35,9 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Activity activity = nda.get();
-        if (activity!=null) {
-            NewsItemProvider nip = (NewsItemProvider) activity;
+        Fragment fragment = nda.get();
+        if (fragment!=null) {
+            NewsItemProvider nip = (NewsItemProvider) fragment;
             nip.setItem(newsItem);
         }
     }

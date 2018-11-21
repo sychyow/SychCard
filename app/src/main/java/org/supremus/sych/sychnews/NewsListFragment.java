@@ -109,7 +109,7 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
         super.onStart();
         int id = NYTApi.getChangedId();
         if (id > 0) {
-            new GetItemTask(getActivity(), id).execute();
+            new GetItemTask(this, id).execute();
             NYTApi.setChangedId(-1);
         }
         id = NYTApi.getRemovedId();

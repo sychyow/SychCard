@@ -1,15 +1,18 @@
 package org.supremus.sych.sychnews;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,53 +28,62 @@ import org.supremus.sych.sychnews.tasks.GetItemTask;
 import org.supremus.sych.sychnews.tasks.SetItemTask;
 import org.supremus.sych.sychnews.util.DataUtils;
 
-public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, NewsItemProvider, View.OnClickListener {
+import java.util.zip.Inflater;
+
+public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemProvider, View.OnClickListener {
 
 
     private static Intent intent = null;
     public static final String EXTRA_ITEM = "EXTRA_ITEM";
     public static final String EXTRA_ID = "EXTRA_ID";
+    private static final String ARG_ID = "args:newsId";
     private static final int MODE_SHOW = 1;
     private static final int MODE_EDIT = 2;
     private int activityMode = MODE_SHOW;
     private NewsItem currentItem = null;
     private Button btnEdit;
+    private View v;
+
+    public NewsDetailFragment() {
+    }
+
+    public static NewsDetailFragment newInstance(int newsId) {
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_ID, newsId);
+        NewsDetailFragment fragment = new NewsDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);
-        if (newsItem!=null) {
-            setContentView(R.layout.activity_news_detail_web);
-            WebView wv = findViewById(R.id.webv_news);
-            wv.getSettings().setJavaScriptEnabled(true);
-            wv.loadUrl(newsItem.getFullText());
-        } else {
-            setContentView(R.layout.activity_news_detail);
-            Toolbar tb = findViewById(R.id.sych_toolbar);
-            setSupportActionBar(tb);
-            btnEdit = findViewById(R.id.btn_edit);
-            btnEdit.setOnClickListener(this);
-            ImageButton btnDelete = findViewById(R.id.btn_delete);
-            btnDelete.setOnClickListener(this);
-            makeViewer();
-            int newsId = getIntent().getIntExtra(NewsDetailActivity.EXTRA_ID, 0);
-            new GetItemTask(this, newsId).execute();
-        }
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.activity_news_detail, container, false);
+        Toolbar tb = v.findViewById(R.id.sych_toolbar);
+        AppCompatActivity aca = (AppCompatActivity) getActivity();
+        aca.setSupportActionBar(tb);
+        btnEdit = v.findViewById(R.id.btn_edit);
+        btnEdit.setOnClickListener(this);
+        ImageButton btnDelete = v.findViewById(R.id.btn_delete);
+        btnDelete.setOnClickListener(this);
+        makeViewer();
+        int newsId = getArguments().getInt(ARG_ID);
+        new GetItemTask(this, newsId).execute();
+        return v;
     }
+
 
     private void makeViewer() {
         NewsViewFragment nvf = new NewsViewFragment();
-        getSupportFragmentManager()
+        this.getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.frame_details, nvf, "NEWS_VIEW")
+                .addToBackStack("VIEW")
                 .commit();
     }
 
     public static void launch(Context parent, NewsItem item) {
-        if (intent == null) intent = new Intent(parent, NewsDetailActivity.class);
+        if (intent == null) intent = new Intent(parent, NewsDetailFragment.class);
         //intent.putExtra(EXTRA_ITEM, item);
         intent.putExtra(EXTRA_ID, item.getId());
         parent.startActivity(intent);
@@ -82,32 +94,33 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float ivHeight = displayMetrics.heightPixels / 3; //NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);one third of a screen height
 
-        ImageView iv = findViewById(R.id.iv_news_image);
+        ImageView iv = v.findViewById(R.id.iv_news_image);
         iv.getLayoutParams().height = (int) (ivHeight);
         Glide.with(this).load(newsItem.getImageUrl()).into(iv);
-        TextView header = findViewById(R.id.tv_news_header);
+        TextView header = v.findViewById(R.id.tv_news_header);
         header.setText(newsItem.getTitle());
-        TextView timestamp = findViewById(R.id.tv_news_timestamp);
+        TextView timestamp = v.findViewById(R.id.tv_news_timestamp);
         DataUtils.setDateString(timestamp, newsItem.getPublishDate());
-        TextView fullText = findViewById(R.id.tv_news_text);
-        fullText.setText(newsItem.getFullText());
+        TextView fullText = v.findViewById(R.id.tv_news_text);
+        fullText.setText(newsItem.getPreviewText());
 
-        if (newsItem.getCategory()!=null) {
-            setTitle(newsItem.getCategory().getName());
+        if (newsItem.getCategory() != null) {
+            getActivity().setTitle(newsItem.getCategory().getName());
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.btn_edit) {
+        if (v.getId() == R.id.btn_edit) {
             switch (activityMode) {
                 case MODE_SHOW:
                     activityMode = MODE_EDIT;
                     btnEdit.setText(R.string.btn_save);
                     NewsEditFragment nef = new NewsEditFragment();
-                    getSupportFragmentManager()
+                    getChildFragmentManager()
                             .beginTransaction()
                             .replace(R.id.frame_details, nef, "NEWS_EDIT")
+                            .addToBackStack("EDIT")
                             .commit();
                     break;
                 case MODE_EDIT:
@@ -116,21 +129,21 @@ public class NewsDetailActivity extends AppCompatActivity implements UIUpdater, 
                     updateData();
             }
         }
-        if (v.getId()==R.id.btn_delete) {
+        if (v.getId() == R.id.btn_delete) {
             new DelItemTask(this, currentItem).execute();
         }
     }
 
     private void updateData() {
         NewsEditFragment nef =
-                (NewsEditFragment) getSupportFragmentManager().findFragmentByTag("NEWS_EDIT");
+                (NewsEditFragment) getChildFragmentManager().findFragmentByTag("NEWS_EDIT");
         currentItem = nef.getNews();
-        Log.i("SYCH", currentItem.getTitle());
         new SetItemTask(this, currentItem).execute();
         NewsViewFragment nvf = new NewsViewFragment();
-        getSupportFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_details, nvf, "NEWS_VIEW")
+                .addToBackStack("VIEW")
                 .commit();
     }
 

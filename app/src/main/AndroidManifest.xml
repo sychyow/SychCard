@@ -26,7 +26,7 @@
             android:theme="@style/Sych.News.Theme.NoBar">
         </activity>
         <activity
-            android:name=".NewsDetailActivity"
+            android:name=".NewsDetailFragment"
             android:theme="@style/Sych.News.Theme.NoBar" />
         <activity android:name=".MainActivity"
             android:theme="@style/Sych.News.Theme.NoBar">

@@ -9,13 +9,15 @@ import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.util.NewsExtractor;
 
+import androidx.fragment.app.Fragment;
+
 public class SetItemTask extends AsyncTask<Object, Void, Void> {
     private final NewsDB db;
     private final NewsItem newsItem;
 
-    public SetItemTask(Activity nda, NewsItem newsItem) {
+    public SetItemTask(Fragment fragment, NewsItem newsItem) {
         this.newsItem = newsItem;
-        db = NewsDB.getAppDatabase(nda);
+        db = NewsDB.getAppDatabase(fragment.getActivity());
     }
 
     @Override

@@ -11,15 +11,18 @@ import org.supremus.sych.sychnews.util.NewsExtractor;
 
 import java.lang.ref.WeakReference;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 public class DelItemTask extends AsyncTask<Object, Void, Void> {
     private final NewsDB db;
     private final NewsItem newsItem;
-    private final WeakReference<Activity> wAct;
+    private final WeakReference<Fragment> wFrag;
 
-    public DelItemTask(Activity nda, NewsItem newsItem) {
+    public DelItemTask(Fragment fragment, NewsItem newsItem) {
         this.newsItem = newsItem;
-        db = NewsDB.getAppDatabase(nda);
-        wAct = new WeakReference<>(nda);
+        db = NewsDB.getAppDatabase(fragment.getActivity());
+        wFrag = new WeakReference<>(fragment);
     }
 
     @Override
@@ -33,9 +36,9 @@ public class DelItemTask extends AsyncTask<Object, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Activity activity = wAct.get();
-        if (activity!=null) {
-            activity.finish();
+        Fragment fragment = wFrag.get();
+        if (fragment!=null) {
         }
+        fragment.getActivity().getSupportFragmentManager().popBackStack("LIST",0);
     }
 }
