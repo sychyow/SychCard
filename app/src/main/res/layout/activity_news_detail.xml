@@ -5,24 +5,17 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <FrameLayout
-        android:id="@+id/frame_details"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_height"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbar_height"
-            android:layout_gravity="center"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="top"
+            app:expandedTitleGravity="center_vertical"
             app:expandedTitleMarginStart="@dimen/title_margin"
             app:expandedTitleMarginTop="@dimen/title_margin"
             app:expandedTitleTextAppearance="@android:style/TextAppearance.Material.Title"
@@ -41,11 +34,11 @@
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginStart="@dimen/small_text_size"
                     android:layout_marginEnd="@dimen/small_text_size"
-                    android:background="?android:attr/selectableItemBackground"
                     android:adjustViewBounds="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:contentDescription="@string/delete"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/delete"
-                    android:contentDescription="@string/delete" />
+                    android:src="@drawable/delete" />
 
                 <Button
                     android:id="@+id/btn_edit"
@@ -61,4 +54,11 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

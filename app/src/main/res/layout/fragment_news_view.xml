@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/bottom_margin"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 tools:layout_height="128dp"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -55,10 +55,12 @@
             <TextView
                 android:id="@+id/tv_news_text"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/base_margin"
                 android:layout_marginEnd="@dimen/base_margin"
                 android:layout_weight="1"
+                android:textSize="@dimen/text_size"
+                android:textAlignment="textStart"
                 tools:text="@string/curriculum_vitae" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

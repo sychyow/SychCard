@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -185,6 +186,13 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ModeSetter modeSetter = (ModeSetter) getActivity();
+        modeSetter.setMode(MainActivity.MODE_LIST);
     }
 
     @Override

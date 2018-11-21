@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ModeSetter{
 
-    private static final int MODE_LIST = 0;
-    private static final int MODE_SHOW = 1;
-    private static final int MODE_EDIT = 2;
+    public static final int MODE_LIST = 0;
+    public static final int MODE_SHOW = 1;
+    public static final int MODE_EDIT = 2;
     private int activityMode = MODE_LIST;
 
     @Override
@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
+        if(activityMode==MODE_SHOW){
+            menu.findItem(R.id.menu_update).setVisible(false);
+        }
         return true;
     }
 
@@ -61,5 +64,12 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         if (fragment==null||fragment.getChildFragmentManager().getBackStackEntryCount()<=1)
             getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void setMode(int mode) {
+
+        activityMode = mode;
+        invalidateOptionsMenu();
     }
 }
