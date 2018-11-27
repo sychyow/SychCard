@@ -85,9 +85,7 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemP
                 .commit();
     }
 
-
     public void updateUI(NewsItem newsItem) {
-
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float ivHeight = displayMetrics.heightPixels / 3; //NewsItem newsItem = getIntent().getParcelableExtra(EXTRA_ITEM);one third of a screen height
 

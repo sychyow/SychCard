@@ -22,12 +22,14 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NewsListFragment nlf = new NewsListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.frame_list, nlf, "NEWS_LIST")
-                .addToBackStack("LIST")
-                .commit();
+        if (savedInstanceState==null) {
+            NewsListFragment nlf = new NewsListFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.frame_list, nlf, "NEWS_LIST")
+                    .addToBackStack("LIST")
+                    .commit();
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.supremus.sych.sychnews.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.util.DataUtils;
 
 import java.util.Arrays;
@@ -115,6 +116,14 @@ public final class NYTApi {
         return removedId;
     }
 
+    public static NewsItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    public static void setSelectedItem(NewsItem selectedItem) {
+        NYTApi.selectedItem = selectedItem;
+    }
+
     @NonNull
     private Retrofit buildRetrofitClient(@NonNull OkHttpClient client) {
         Gson gson = new GsonBuilder()
@@ -142,5 +151,7 @@ public final class NYTApi {
                 .readTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
                 .build();
     }
+
+    private static NewsItem selectedItem;
 
 }

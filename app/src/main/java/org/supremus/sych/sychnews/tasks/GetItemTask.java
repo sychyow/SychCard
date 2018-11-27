@@ -6,6 +6,7 @@ import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.util.NewsExtractor;
 
 import java.lang.ref.WeakReference;
@@ -28,6 +29,7 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
     protected Void doInBackground(Object... objects) {
         NewsEntity dbNews = db.newsDAO().getNewsById(newsId);
         newsItem = NewsExtractor.makeItem(dbNews);
+        NYTApi.setSelectedItem(newsItem);
         return null;
     }
 
@@ -35,9 +37,10 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Fragment fragment = nda.get();
+
         if (fragment!=null) {
             NewsItemProvider nip = (NewsItemProvider) fragment;
-            nip.setItem(newsItem);
+            nip.setItem(NYTApi.getSelectedItem());
         }
     }
 }

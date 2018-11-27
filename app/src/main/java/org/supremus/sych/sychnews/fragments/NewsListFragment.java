@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -170,7 +171,9 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
 
     @Override
     public void apply() {
-        getActivity().runOnUiThread(tool);
+        Activity activity = getActivity();
+        if (activity!=null)
+            activity.runOnUiThread(tool);
     }
 
     @Override
@@ -255,7 +258,12 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
                 case MODE_UPD:
                     getRv().setVisibility(View.VISIBLE);
                     NewsAdapter newsAdapter = (NewsAdapter) getRv().getAdapter();
-                    newsAdapter.setData(na.getData());
+                    if (newsAdapter==null) {
+                        newsAdapter = na;
+                    } else {
+                        newsAdapter.setData(na.getData());
+                        getRv().setAdapter(newsAdapter);
+                    }
                     newsAdapter.notifyDataSetChanged();
                     break;
             }

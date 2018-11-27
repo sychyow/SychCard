@@ -9,6 +9,7 @@ import android.widget.EditText;
 import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.network.NYTApi;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,7 @@ public class NewsEditFragment extends Fragment {
     }
 
     private void setupUI() {
-        baseItem = nip.getItem();
+        baseItem = NYTApi.getSelectedItem();
         etTitle.setText(baseItem.getTitle());
         etShortText.setText(baseItem.getPreviewText());
         etFullText.setText(baseItem.getFullText());
