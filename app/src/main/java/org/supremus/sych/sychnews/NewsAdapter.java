@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import org.supremus.sych.sychnews.data.Category;
 import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.fragments.NewsDetailFragment;
+import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.util.DataUtils;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     public void onClick(View v) {
         RecyclerView rv = (RecyclerView) v.getParent();
         int pos = rv.getChildLayoutPosition(v);
+        NYTApi.setActivityMode(MainActivity.MODE_SHOW);
         NewsDetailFragment ndf = NewsDetailFragment.newInstance(data.get(pos).getId());
         ((FragmentActivity) v.getContext()).getSupportFragmentManager()
                 .beginTransaction()

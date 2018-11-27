@@ -17,17 +17,15 @@ import androidx.fragment.app.Fragment;
 
 public class NewsEditFragment extends Fragment {
 
-    NewsItemProvider nip;
-    NewsItem baseItem;
-    EditText etTitle;
-    EditText etShortText;
-    EditText etFullText;
+    private NewsItem baseItem;
+    private EditText etTitle;
+    private EditText etShortText;
+    private EditText etFullText;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_edit, container, false);
-        nip = (NewsItemProvider) getParentFragment();
         loadComponents(view);
         setupUI();
         return view;

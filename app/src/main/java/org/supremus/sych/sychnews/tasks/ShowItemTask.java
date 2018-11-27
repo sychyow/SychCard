@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.interfaces.UIUpdater;
+import org.supremus.sych.sychnews.network.NYTApi;
 
 import java.lang.ref.WeakReference;
 
@@ -24,10 +25,7 @@ public class ShowItemTask extends AsyncTask<Object,Void,Void> {
     }
 
     private void fillUI() {
-        Fragment fragment = wFrag.get();
-        if (fragment==null) return;
-        NewsItemProvider nip = (NewsItemProvider) fragment;
-        while (nip.getItem()==null) {
+        while (NYTApi.getSelectedItem()==null) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -35,7 +33,9 @@ public class ShowItemTask extends AsyncTask<Object,Void,Void> {
             }
             fillUI();
         }
+        Fragment fragment = wFrag.get();
+        if (fragment==null) return;
         UIUpdater updater = (UIUpdater) fragment;
-        fragment.getActivity().runOnUiThread(() -> updater.updateUI(nip.getItem()));
+        fragment.getActivity().runOnUiThread(() -> updater.updateUI(NYTApi.getSelectedItem()));
     }
 }

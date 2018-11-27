@@ -38,7 +38,7 @@ public class DelItemTask extends AsyncTask<Object, Void, Void> {
         super.onPostExecute(aVoid);
         Fragment fragment = wFrag.get();
         if (fragment!=null) {
+            fragment.getActivity().getSupportFragmentManager().popBackStack("LIST", 0);
         }
-        fragment.getActivity().getSupportFragmentManager().popBackStack("LIST",0);
     }
 }

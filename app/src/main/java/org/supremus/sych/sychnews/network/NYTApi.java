@@ -3,6 +3,7 @@ package org.supremus.sych.sychnews.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.supremus.sych.sychnews.MainActivity;
 import org.supremus.sych.sychnews.data.NewsItem;
 import org.supremus.sych.sychnews.util.DataUtils;
 
@@ -124,6 +125,15 @@ public final class NYTApi {
         NYTApi.selectedItem = selectedItem;
     }
 
+    public static int getActivityMode() {
+        return activityMode;
+    }
+
+    public static void setActivityMode(int activityMode) {
+        NYTApi.activityMode = activityMode;
+    }
+
+
     @NonNull
     private Retrofit buildRetrofitClient(@NonNull OkHttpClient client) {
         Gson gson = new GsonBuilder()
@@ -153,5 +163,7 @@ public final class NYTApi {
     }
 
     private static NewsItem selectedItem;
+
+    private static int activityMode = MainActivity.MODE_LIST;
 
 }

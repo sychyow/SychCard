@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import org.supremus.sych.sychnews.fragments.NewsListFragment;
 import org.supremus.sych.sychnews.interfaces.ModeSetter;
+import org.supremus.sych.sychnews.network.NYTApi;
 
 public class MainActivity extends AppCompatActivity implements ModeSetter {
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
     public void setMode(int mode) {
 
         activityMode = mode;
+        NYTApi.setActivityMode(mode);
         invalidateOptionsMenu();
     }
 }

@@ -36,11 +36,5 @@ public class GetItemTask extends AsyncTask<Object, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Fragment fragment = nda.get();
-
-        if (fragment!=null) {
-            NewsItemProvider nip = (NewsItemProvider) fragment;
-            nip.setItem(NYTApi.getSelectedItem());
-        }
     }
 }

@@ -25,18 +25,17 @@ import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.interfaces.UIUpdater;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.tasks.DelItemTask;
 import org.supremus.sych.sychnews.tasks.GetItemTask;
 import org.supremus.sych.sychnews.tasks.SetItemTask;
 import org.supremus.sych.sychnews.util.DataUtils;
 
-public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemProvider, View.OnClickListener {
+public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnClickListener {
 
     private static final String ARG_ID = "args:newsId";
     private static final int MODE_SHOW = 1;
     private static final int MODE_EDIT = 2;
-    private int activityMode = MODE_SHOW;
-    private NewsItem currentItem = null;
     private Button btnEdit;
     private View v;
 
@@ -62,22 +61,25 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemP
         btnEdit.setOnClickListener(this);
         ImageButton btnDelete = v.findViewById(R.id.btn_delete);
         btnDelete.setOnClickListener(this);
-        makeViewer();
-        int newsId = getArguments().getInt(ARG_ID);
-        new GetItemTask(this, newsId).execute();
+        updateButton();
+        if (savedInstanceState==null) {
+            NewsViewFragment nvf = new NewsViewFragment();
+            setViewer(nvf);
+            int newsId = getArguments().getInt(ARG_ID);
+            NYTApi.setSelectedItem(null);
+            new GetItemTask(this, newsId).execute();
+        }
         return v;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ModeSetter modeSetter = (ModeSetter) getActivity();
-        modeSetter.setMode(MainActivity.MODE_SHOW);
     }
 
 
-    private void makeViewer() {
-        NewsViewFragment nvf = new NewsViewFragment();
+    private void setViewer(NewsViewFragment nvf) {
+
         this.getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.frame_details, nvf, "NEWS_VIEW")
@@ -107,10 +109,10 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemP
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_edit) {
-            switch (activityMode) {
+            switch (NYTApi.getActivityMode()) {
                 case MODE_SHOW:
-                    activityMode = MODE_EDIT;
-                    btnEdit.setText(R.string.btn_save);
+                    NYTApi.setActivityMode(MODE_EDIT);
+                    updateButton();
                     NewsEditFragment nef = new NewsEditFragment();
                     getChildFragmentManager()
                             .beginTransaction()
@@ -119,20 +121,32 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemP
                             .commit();
                     break;
                 case MODE_EDIT:
-                    activityMode = MODE_SHOW;
-                    btnEdit.setText(R.string.btn_edit);
+                    NYTApi.setActivityMode(MODE_SHOW);
+                    updateButton();
                     updateData();
             }
         }
         if (v.getId() == R.id.btn_delete) {
-            new DelItemTask(this, currentItem).execute();
+            new DelItemTask(this, NYTApi.getSelectedItem()).execute();
+        }
+    }
+
+    private void updateButton(){
+        switch (NYTApi.getActivityMode()) {
+            case MODE_SHOW:
+                btnEdit.setText(R.string.btn_edit);
+                break;
+            case MODE_EDIT:
+                btnEdit.setText(R.string.btn_save);
+                break;
         }
     }
 
     private void updateData() {
         NewsEditFragment nef =
                 (NewsEditFragment) getChildFragmentManager().findFragmentByTag("NEWS_EDIT");
-        currentItem = nef.getNews();
+        NewsItem currentItem = nef.getNews();
+        NYTApi.setSelectedItem(currentItem);
         new SetItemTask(this, currentItem).execute();
         NewsViewFragment nvf = new NewsViewFragment();
         getChildFragmentManager()
@@ -142,13 +156,4 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, NewsItemP
                 .commit();
     }
 
-    @Override
-    public NewsItem getItem() {
-        return currentItem;
-    }
-
-    @Override
-    public void setItem(NewsItem val) {
-        currentItem = val;
-    }
 }
