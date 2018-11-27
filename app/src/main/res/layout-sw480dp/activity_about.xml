@@ -5,6 +5,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".AboutActivity">
 
@@ -24,13 +25,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
-        android:drawablePadding="8dp"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:drawableStart="@drawable/language_java"
-        android:paddingEnd="@dimen/text_padding"
+        android:drawablePadding="8dp"
         android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding"
         android:text="@string/spec_first"
         android:textSize="@dimen/text_size" />
 
@@ -38,13 +39,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
-        android:drawablePadding="8dp"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:drawableStart="@drawable/camera"
-        android:paddingEnd="@dimen/text_padding"
+        android:drawablePadding="8dp"
         android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding"
         android:text="@string/spec_second"
         android:textSize="@dimen/text_size" />
 
@@ -52,13 +53,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
-        android:drawablePadding="8dp"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:drawableStart="@drawable/stove"
-        android:paddingEnd="@dimen/text_padding"
+        android:drawablePadding="8dp"
         android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding"
         android:text="@string/spec_third"
         android:textSize="@dimen/text_size" />
 
@@ -66,22 +67,22 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:background="?android:attr/listDivider"
-        android:paddingEnd="@dimen/text_padding"
-        android:paddingStart="@dimen/text_padding" />
+        android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
-        android:paddingEnd="@dimen/text_padding"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding"
         android:text="@string/curriculum_vitae"
         android:textSize="@dimen/text_size" />
 
@@ -89,25 +90,25 @@
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:background="?android:attr/listDivider"
-        android:paddingEnd="@dimen/text_padding"
-        android:paddingStart="@dimen/text_padding" />
+        android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding" />
 
     <EditText
         android:id="@+id/et_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:ems="10"
         android:hint="@string/message_tip"
         android:inputType="text"
-        android:paddingEnd="@dimen/text_padding"
         android:paddingStart="@dimen/text_padding"
+        android:paddingEnd="@dimen/text_padding"
         tools:ignore="Autofill" />
 
     <Button
@@ -115,9 +116,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginBottom="@dimen/bottom_margin"
-        android:layout_marginEnd="@dimen/base_margin"
         android:layout_marginStart="@dimen/base_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_marginBottom="@dimen/bottom_margin"
         android:background="?android:attr/selectableItemBackground"
         android:text="@string/send_mail" />
 
