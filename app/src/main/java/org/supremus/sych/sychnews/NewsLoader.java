@@ -7,13 +7,30 @@ import org.supremus.sych.sychnews.tasks.LoadDataTask;
 
 public class NewsLoader {
 
-    private static Boolean forceNet = false;
+    private  Boolean forceNet;
 
-    private static Boolean isUpdate = false;
+    private  Boolean isUpdate;
 
-    public static void forceNetwork() { forceNet = true; }
+    private NewsLoader(boolean net, boolean upd) {
+        forceNet = net;
+        isUpdate = upd;
+    }
 
-    public static void load(NewsListFragment nla) {
+    public NewsLoader forceNetwork() {
+        forceNet = true;
+        return this;
+    }
+
+    public NewsLoader setUpdate() {
+        isUpdate = true;
+        return this;
+    }
+
+    public static NewsLoader get() {
+        return new NewsLoader(false, false);
+    }
+
+    public  void load(NewsListFragment nla) {
         nla.getRv().setVisibility(View.GONE);
         nla.getPb().setVisibility(View.VISIBLE);
         int mode = forceNet ? LoadDataTask.TASK_NETWORK : LoadDataTask.TASK_DB;
@@ -21,7 +38,5 @@ public class NewsLoader {
         new LoadDataTask(nla, mode, isUpdate).execute();
     }
 
-    public static void setUpdate(Boolean isUpdate) {
-        NewsLoader.isUpdate = isUpdate;
-    }
+
 }

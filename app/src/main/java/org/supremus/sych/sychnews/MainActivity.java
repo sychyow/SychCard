@@ -50,9 +50,10 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
                 AboutActivity.launch(this);
                 return true;
             case R.id.menu_update: {
-                NewsLoader.setUpdate(true);
-                NewsLoader.forceNetwork();
-                NewsLoader.load((NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_list));
+                NewsLoader.get()
+                        .setUpdate()
+                        .forceNetwork()
+                        .load((NewsListFragment)getSupportFragmentManager().findFragmentById(R.id.frame_list));
             }
         }
         return super.onOptionsItemSelected(item);

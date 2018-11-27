@@ -73,7 +73,8 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
         aca.getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
-        NewsLoader.load(this);
+        NewsLoader.get()
+                .load(this);
         return v;
     }
 
@@ -180,15 +181,17 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
     public void onClick(View v) {
         if (v.getId() == R.id.btnRetry) {
             errorPanel.setVisibility(View.GONE);
-            NewsLoader.forceNetwork();
-            NewsLoader.load(this);
+            NewsLoader.get()
+                    .forceNetwork()
+                    .load(this);
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         NYTApi.setCurrentSection(position);
-        NewsLoader.load(NewsListFragment.this);
+        NewsLoader.get()
+                .load(NewsListFragment.this);
     }
 
     @Override
