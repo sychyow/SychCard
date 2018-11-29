@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import static org.supremus.sych.sychnews.R.id.fragment_intro;
-
 public class IntroFragments extends Fragment {
     private int sourceId;
 

@@ -1,6 +1,5 @@
 package org.supremus.sych.sychnews.tasks;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.data.NewsDB;

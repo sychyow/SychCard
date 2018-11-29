@@ -1,6 +1,5 @@
 package org.supremus.sych.sychnews.tasks;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.supremus.sych.sychnews.data.NewsDB;
@@ -12,7 +11,6 @@ import org.supremus.sych.sychnews.util.NewsExtractor;
 import java.lang.ref.WeakReference;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 public class DelItemTask extends AsyncTask<Object, Void, Void> {
     private final NewsDB db;

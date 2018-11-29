@@ -1,14 +1,5 @@
 package org.supremus.sych.sychnews.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -26,17 +17,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.supremus.sych.sychnews.MainActivity;
-import org.supremus.sych.sychnews.interfaces.ModeSetter;
 import org.supremus.sych.sychnews.NewsAdapter;
-import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.NewsLoader;
 import org.supremus.sych.sychnews.R;
-import org.supremus.sych.sychnews.interfaces.UITooler;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.interfaces.ModeSetter;
+import org.supremus.sych.sychnews.interfaces.UITooler;
 import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.tasks.GetItemTask;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NewsListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {

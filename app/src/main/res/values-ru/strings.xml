@@ -31,4 +31,5 @@
     <string name="hint_news_text">Текст новости</string>
     <string name="et_full_text">Текст новости</string>
     <string name="logo">лого</string>
+    <string name="delete">удалить</string>
 </resources>

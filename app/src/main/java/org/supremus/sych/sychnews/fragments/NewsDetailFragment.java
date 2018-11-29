@@ -1,12 +1,5 @@
 package org.supremus.sych.sychnews.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -19,17 +12,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.supremus.sych.sychnews.MainActivity;
-import org.supremus.sych.sychnews.interfaces.ModeSetter;
-import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.R;
-import org.supremus.sych.sychnews.interfaces.UIUpdater;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.interfaces.UIUpdater;
 import org.supremus.sych.sychnews.network.NYTApi;
 import org.supremus.sych.sychnews.tasks.DelItemTask;
 import org.supremus.sych.sychnews.tasks.GetItemTask;
 import org.supremus.sych.sychnews.tasks.SetItemTask;
 import org.supremus.sych.sychnews.util.DataUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnClickListener {
 
@@ -70,11 +66,6 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnCl
             new GetItemTask(this, newsId).execute();
         }
         return v;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
 

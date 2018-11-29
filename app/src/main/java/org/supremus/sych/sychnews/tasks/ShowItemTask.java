@@ -2,7 +2,6 @@ package org.supremus.sych.sychnews.tasks;
 
 import android.os.AsyncTask;
 
-import org.supremus.sych.sychnews.interfaces.NewsItemProvider;
 import org.supremus.sych.sychnews.interfaces.UIUpdater;
 import org.supremus.sych.sychnews.network.NYTApi;
 

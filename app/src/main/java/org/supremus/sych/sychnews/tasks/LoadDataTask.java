@@ -24,10 +24,10 @@ import retrofit2.Response;
 
 public class LoadDataTask extends AsyncTask<Object, Void, Void> {
     public static final int TASK_DB = 1;
-    public static int TASK_NETWORK = 2;
-    private WeakReference<UITooler> wTooler;
-    private boolean isUpdate;
-    private int dataMode;
+    public static final int TASK_NETWORK = 2;
+    private final WeakReference<UITooler> wTooler;
+    private final boolean isUpdate;
+    private final int dataMode;
     private final NewsDB db;
 
     public LoadDataTask(Fragment fragment, int mode, boolean update) {

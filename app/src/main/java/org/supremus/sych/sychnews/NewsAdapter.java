@@ -105,7 +105,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
                 v=LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.news_item_alt, parent, false);
                 break;
-                default: return null;
+                default: v=LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.news_item, parent, false);
         }
         v.setOnClickListener(this);
         return new ViewHolder(v);
