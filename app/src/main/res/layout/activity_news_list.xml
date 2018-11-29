@@ -35,7 +35,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".fragments.NewsListFragment"
         tools:listitem="@layout/news_item">
@@ -46,29 +46,32 @@
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:scaleX="0.33"
         android:scaleY="0.33" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_height"
-        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:fitsSystemWindows="false"
+        android:gravity="center_vertical"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/appbar_height"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="top"
-            app:expandedTitleMarginStart="@dimen/title_margin"
-            app:expandedTitleMarginTop="@dimen/title_margin"
+            app:expandedTitleGravity="center_vertical"
             app:expandedTitleTextAppearance="@android:style/TextAppearance.Material.Title"
-            app:layout_scrollFlags="scroll|snap|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/sych_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
                 app:layout_collapseMode="pin">
 
                 <Spinner
