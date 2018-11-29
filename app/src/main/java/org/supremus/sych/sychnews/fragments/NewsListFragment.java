@@ -39,7 +39,7 @@ import org.supremus.sych.sychnews.tasks.GetItemTask;
 import java.util.List;
 
 
-public class NewsListFragment extends Fragment implements NewsItemProvider,View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
+public class NewsListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, UITooler {
 
     private RecyclerView rv;
     private ProgressBar pb;
@@ -73,8 +73,10 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
         aca.getSupportActionBar().setDisplayShowTitleEnabled(false);
         initSpinner();
         setOrientation();
-        NewsLoader.get()
-                .load(this);
+        if (savedInstanceState==null) {
+            NewsLoader.get()
+                    .load(this);
+        }
         return v;
     }
 
@@ -140,10 +142,6 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
         }
     }
 
-
-
-
-
     public RecyclerView getRv() {
         return rv;
     }
@@ -204,24 +202,6 @@ public class NewsListFragment extends Fragment implements NewsItemProvider,View.
         super.onAttach(context);
         ModeSetter modeSetter = (ModeSetter) getActivity();
         modeSetter.setMode(MainActivity.MODE_LIST);
-    }
-
-    @Override
-    public NewsItem getItem() {
-        return null;
-    }
-
-    @Override
-    public void setItem(NewsItem val) {
-        NewsAdapter na = (NewsAdapter)getRv().getAdapter();
-        List<NewsItem> ln  = (na).getData();
-        for (int i=0; i<ln.size(); i++) {
-            if (ln.get(i).getId()==val.getId()) {
-                ln.set(i, val);
-                na.notifyItemChanged(i);
-                break;
-            }
-        }
     }
 
     class UITool implements Runnable {

@@ -31,7 +31,7 @@ public class NewsLoader {
     }
 
     public  void load(NewsListFragment nla) {
-        nla.getRv().setVisibility(View.GONE);
+        //nla.getRv().setVisibility(View.GONE);
         nla.getPb().setVisibility(View.VISIBLE);
         int mode = forceNet ? LoadDataTask.TASK_NETWORK : LoadDataTask.TASK_DB;
         forceNet = false;
