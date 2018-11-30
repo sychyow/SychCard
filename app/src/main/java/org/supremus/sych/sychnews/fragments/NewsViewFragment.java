@@ -1,6 +1,7 @@
 package org.supremus.sych.sychnews.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +20,19 @@ public class NewsViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState==null) {
-            ModeSetter modeSetter = (ModeSetter) getActivity();
-            modeSetter.setMode(MainActivity.MODE_SHOW);
-        }
+        ModeSetter modeSetter = (ModeSetter) getActivity();
+        modeSetter.setMode(MainActivity.MODE_SHOW);
+        NewsDetailFragment ndf = (NewsDetailFragment) getParentFragment();
+        ndf.updateButton();
         return inflater.inflate(R.layout.fragment_news_view, container, false);
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
         new ShowItemTask(getParentFragment()).execute();
     }
-
 
 
 }

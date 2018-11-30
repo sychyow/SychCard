@@ -123,7 +123,7 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnCl
         }
     }
 
-    private void updateButton(){
+    public void updateButton(){
         switch (NYTApi.getActivityMode()) {
             case MODE_SHOW:
                 btnEdit.setText(R.string.btn_edit);
