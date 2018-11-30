@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnClickListener {
 
+    public  static final String TAG = "NEWS_DETAIL";
     private static final String ARG_ID = "args:newsId";
     private static final int MODE_SHOW = 1;
     private static final int MODE_EDIT = 2;

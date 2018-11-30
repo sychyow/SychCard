@@ -1,7 +1,6 @@
 package org.supremus.sych.sychnews.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -143,7 +142,7 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
-    public RecyclerView getRv() {
+    private RecyclerView getRv() {
         return rv;
     }
 

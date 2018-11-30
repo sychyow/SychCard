@@ -35,7 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         NewsDetailFragment ndf = NewsDetailFragment.newInstance(data.get(pos).getId());
         ((FragmentActivity) v.getContext()).getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_list, ndf, "NEWS_DETAIL")
+                .replace(R.id.frame_list, ndf, NewsDetailFragment.TAG)
                 .addToBackStack("DETAIL")
                 .commit();
     }

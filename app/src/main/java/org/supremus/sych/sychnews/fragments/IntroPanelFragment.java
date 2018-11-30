@@ -65,6 +65,7 @@ public class IntroPanelFragment extends Fragment {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_list, ndf, "NEWS_LIST")
+                .addToBackStack("LIST")
                 .commit();
     }
 

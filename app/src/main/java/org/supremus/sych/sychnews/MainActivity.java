@@ -1,16 +1,17 @@
 package org.supremus.sych.sychnews;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.supremus.sych.sychnews.fragments.IntroPanelFragment;
+import org.supremus.sych.sychnews.fragments.NewsDetailFragment;
 import org.supremus.sych.sychnews.fragments.NewsListFragment;
 import org.supremus.sych.sychnews.interfaces.ModeSetter;
 import org.supremus.sych.sychnews.network.NYTApi;
@@ -80,12 +81,18 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
             finish();
             return;
         }
-        int index = getSupportFragmentManager().getBackStackEntryCount() - 1;
-        FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(index);
-        String tag = backEntry.getName();
-        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
-        if (fragment==null||fragment.getChildFragmentManager().getBackStackEntryCount()<=1)
-            getSupportFragmentManager().popBackStack();
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(NewsDetailFragment.TAG);
+        if (fragment==null||fragment.getChildFragmentManager().getBackStackEntryCount()<=1) {
+            super.onBackPressed();
+        }
+        else {
+            if (fragment.getChildFragmentManager().getBackStackEntryCount()>1) {
+                fragment.getChildFragmentManager().popBackStack();
+            }
+        }
+
+
     }
 
     @Override
