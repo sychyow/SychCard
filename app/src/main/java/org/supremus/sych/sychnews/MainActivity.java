@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-        if(activityMode==MODE_SHOW){
+        if(activityMode==MODE_SHOW || activityMode==MODE_EDIT){
             menu.findItem(R.id.menu_update).setVisible(false);
         }
         return true;

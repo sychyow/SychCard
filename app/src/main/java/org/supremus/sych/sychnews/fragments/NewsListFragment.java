@@ -75,6 +75,8 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
         if (savedInstanceState==null) {
             NewsLoader.get()
                     .load(this);
+            ModeSetter modeSetter = (ModeSetter) getActivity();
+            modeSetter.setMode(MainActivity.MODE_LIST);
         }
         return v;
     }
@@ -196,12 +198,6 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
 
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ModeSetter modeSetter = (ModeSetter) getActivity();
-        modeSetter.setMode(MainActivity.MODE_LIST);
-    }
 
     class UITool implements Runnable {
         private final int mode;

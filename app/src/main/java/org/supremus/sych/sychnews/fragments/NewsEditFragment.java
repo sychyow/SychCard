@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import org.supremus.sych.sychnews.MainActivity;
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.data.NewsItem;
+import org.supremus.sych.sychnews.interfaces.ModeSetter;
 import org.supremus.sych.sychnews.network.NYTApi;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,10 @@ public class NewsEditFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news_edit, container, false);
         loadComponents(view);
         setupUI();
+        if (savedInstanceState==null) {
+            ModeSetter modeSetter = (ModeSetter) getActivity();
+            modeSetter.setMode(MainActivity.MODE_EDIT);
+        }
         return view;
     }
 
