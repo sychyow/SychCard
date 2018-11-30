@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.supremus.sych.sychnews.fragments.IntroPanelFragment;
 import org.supremus.sych.sychnews.fragments.NewsListFragment;
 import org.supremus.sych.sychnews.interfaces.ModeSetter;
 import org.supremus.sych.sychnews.network.NYTApi;
@@ -19,17 +22,29 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
     public static final int MODE_EDIT = 2;
     private int activityMode = MODE_LIST;
 
+    private static final String INTRO_PREF = "INTRO";
+    private static final Boolean INTRO_DEF = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState==null) {
-            NewsListFragment nlf = new NewsListFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.frame_list, nlf, "NEWS_LIST")
-                    .addToBackStack("LIST")
-                    .commit();
+            if (needIntro()) {
+                IntroPanelFragment ipf = new IntroPanelFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.frame_list, ipf, "NEWS_INTRO")
+                        .commit();
+            } else {
+                NewsListFragment nlf = new NewsListFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.frame_list, nlf, "NEWS_LIST")
+                        .addToBackStack("LIST")
+                        .commit();
+            }
+            updatePref();
         }
     }
 
@@ -80,4 +95,19 @@ public class MainActivity extends AppCompatActivity implements ModeSetter {
         NYTApi.setActivityMode(mode);
         invalidateOptionsMenu();
     }
+
+    private boolean needIntro() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPref.getBoolean(INTRO_PREF, INTRO_DEF);
+    }
+
+    private void updatePref() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor ed = sharedPref.edit();
+        Boolean introState = sharedPref.getBoolean(INTRO_PREF, INTRO_DEF);
+        ed.putBoolean(INTRO_PREF, !introState);
+        ed.apply();
+    }
+
+
 }

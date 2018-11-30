@@ -7,7 +7,7 @@
     android:background="@android:color/holo_blue_dark"
     android:backgroundTint="@android:color/holo_blue_dark"
     android:orientation="vertical"
-    tools:context=".IntroActivity">
+    tools:context=".fragments.IntroPanelFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/intro_pager"

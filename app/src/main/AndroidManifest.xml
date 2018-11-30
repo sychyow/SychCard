@@ -19,7 +19,7 @@
             android:label="@string/full_name"
             android:theme="@style/Sych.News.Theme.NoBar" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".fragments.IntroPanelFragment"
             android:theme="@style/Sych.News.Theme.NoBar">
         </activity>
         <activity android:name=".MainActivity"
