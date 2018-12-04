@@ -50,6 +50,7 @@ public final class NYTApi {
     private static boolean enabled = false;
     private static int changedId = -1;
     private static int removedId = -1;
+    private static boolean twoPanel = false;
 
 
     public static synchronized NYTApi getInstance() {
@@ -131,6 +132,14 @@ public final class NYTApi {
 
     public static void setActivityMode(int activityMode) {
         NYTApi.activityMode = activityMode;
+    }
+
+    public static boolean isTwoPanel() {
+        return twoPanel;
+    }
+
+    public static void setTwoPanel(boolean twoPanel) {
+        NYTApi.twoPanel = twoPanel;
     }
 
 

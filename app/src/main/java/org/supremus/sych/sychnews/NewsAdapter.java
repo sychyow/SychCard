@@ -33,9 +33,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
         int pos = rv.getChildLayoutPosition(v);
         NYTApi.setActivityMode(MainActivity.MODE_SHOW);
         NewsDetailFragment ndf = NewsDetailFragment.newInstance(data.get(pos).getId());
+        int frameId = NYTApi.isTwoPanel()?R.id.frame_detail:R.id.frame_list;
         ((FragmentActivity) v.getContext()).getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_list, ndf, NewsDetailFragment.TAG)
+                .replace(frameId, ndf, NewsDetailFragment.TAG)
                 .addToBackStack("DETAIL")
                 .commit();
     }

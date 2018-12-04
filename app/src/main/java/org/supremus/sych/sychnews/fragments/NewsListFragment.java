@@ -92,7 +92,7 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
 
     private void setOrientation() {
         int orientation = getContext().getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (orientation == Configuration.ORIENTATION_PORTRAIT||NYTApi.isTwoPanel()) {
             LinearLayoutManager llm = new LinearLayoutManager(getContext());
             getRv().setLayoutManager(llm);
         } else {
