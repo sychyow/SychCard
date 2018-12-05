@@ -5,26 +5,35 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+
+
+    <FrameLayout
+        android:id="@+id/frame_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:fitsSystemWindows="false"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/appbar_height"
+            android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="center_vertical"
-            app:expandedTitleMarginStart="@dimen/title_margin"
-            app:expandedTitleMarginTop="@dimen/title_margin"
+            app:titleEnabled="false"
             app:expandedTitleTextAppearance="@android:style/TextAppearance.Material.Title"
-            app:layout_scrollFlags="scroll|snap|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/sych_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
                 app:layout_collapseMode="pin">
 
                 <ImageButton
@@ -54,11 +63,4 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/frame_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

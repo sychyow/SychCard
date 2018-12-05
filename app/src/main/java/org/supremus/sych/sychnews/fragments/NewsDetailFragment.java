@@ -94,7 +94,8 @@ public class NewsDetailFragment extends Fragment implements UIUpdater, View.OnCl
         fullText.setText(newsItem.getPreviewText());
 
         if (newsItem.getCategory() != null) {
-            getActivity().setTitle(newsItem.getCategory().getName());
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            activity.getSupportActionBar().setTitle(newsItem.getCategory().getName());
         }
     }
 
