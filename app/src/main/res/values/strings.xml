@@ -31,4 +31,6 @@
     <string name="et_full_text">NewsText</string>
     <string name="logo">logo</string>
     <string name="delete">delete</string>
+    <string name="channel_name">SychNews</string>
+    <string name="channel_description">Sych News notifications</string>
 </resources>

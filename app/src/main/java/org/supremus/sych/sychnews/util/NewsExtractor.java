@@ -58,6 +58,10 @@ public final class NewsExtractor {
     }
 
     public static NewsEntity makeEntity(NewsItem item) {
+        return makeEntity(item, null);
+    }
+
+    public static NewsEntity makeEntity(NewsItem item, String section) {
         NewsEntity entity = new NewsEntity(
                 item.getTitle(),
                 item.getImageUrl(),
@@ -66,7 +70,7 @@ public final class NewsExtractor {
                 item.getPublishDate(),
                 item.getPreviewText(),
                 item.getFullText());
-        entity.section = NYTApi.getCurrentSection();
+        entity.section = section==null?NYTApi.getCurrentSection():section;
         entity.id = item.getId();
         return entity;
     }

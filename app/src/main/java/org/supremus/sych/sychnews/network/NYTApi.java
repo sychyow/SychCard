@@ -38,6 +38,7 @@ public final class NYTApi {
             "automobiles",
             "obituaries",
             "insider");
+    public static final int TIMEOUT = 5000; //Request timeout in ms
 
 
     private static final String URL = "https://api.nytimes.com/svc/topstories/v2/";
