@@ -46,7 +46,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    def work_version = "1.0.0-alpha12"
+    def work_version = "1.0.0-beta01"
     implementation "android.arch.work:work-runtime:$work_version"
 
     implementation 'me.relex:circleindicator:2.1.0'

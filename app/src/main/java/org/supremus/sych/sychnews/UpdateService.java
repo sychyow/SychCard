@@ -63,7 +63,7 @@ public class UpdateService extends Service implements CompleteListener {
         NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon_ok)
                 .setContentTitle("News update")
-                .setContentText("Sych News updated its news feed")
+                .setContentText("Sych News has updated its news feed")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat nm = NotificationManagerCompat.from(this);
         nm.cancel(11);
