@@ -1,10 +1,11 @@
 package org.supremus.sych.sychnews.tasks;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import org.supremus.sych.sychnews.R;
 import org.supremus.sych.sychnews.SychApp;
-import org.supremus.sych.sychnews.UpdateService;
 import org.supremus.sych.sychnews.data.FeedDTO;
 import org.supremus.sych.sychnews.data.NewsDB;
 import org.supremus.sych.sychnews.data.NewsEntity;
@@ -15,27 +16,42 @@ import org.supremus.sych.sychnews.network.TopStoriesService;
 import org.supremus.sych.sychnews.util.NewsExtractor;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
-import androidx.core.app.NotificationCompat;
 import retrofit2.Response;
 
-import static org.supremus.sych.sychnews.UpdateService.*;
-
 public class UpdateTask extends AsyncTask<Object, Void, Void> {
+    private static final String LAST_UPDATE_TIME_PREF = "LAST_UPDATE_TIME_PREF";
+    static final int MIN_UPD_INTERVAL = 2 * 60 * 60 * 1000;  //two hours
     private final TopStoriesService svc;
     private NewsDB db;
     private CompleteListener listener;
+    private boolean wasSkipped;
 
 
     public UpdateTask(CompleteListener lsnr) {
         db = NewsDB.getAppDatabase(SychApp.SYCHCONTEXT);
         svc = NYTApi.getInstance().getTopStoriesService();
         listener = lsnr;
+        wasSkipped = false;
     }
 
     @Override
     protected Void doInBackground(Object... objects) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(SychApp.SYCHCONTEXT);
+
+        Long lastTime = sharedPref.getLong(LAST_UPDATE_TIME_PREF, 0);
+        Long nowTime = new Date().getTime();
+        if (nowTime-lastTime< MIN_UPD_INTERVAL) {
+            wasSkipped = true;
+            return null;
+        }
+
+        SharedPreferences.Editor ed = sharedPref.edit();
+        ed.putLong("LAST_UPDATE_TIME_PREF", nowTime);
+        ed.apply();
+
         try {
             for (String sec : NYTApi.SECTIONS) {
                 List<NewsItem> data = getNetworkData(sec);
@@ -80,6 +96,7 @@ public class UpdateTask extends AsyncTask<Object, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        listener.taskComplete();
+        if (!wasSkipped)
+            listener.taskComplete();
     }
 }
