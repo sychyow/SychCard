@@ -56,6 +56,7 @@ public class UpdateTask extends AsyncTask<Object, Void, Void> {
             for (String sec : NYTApi.SECTIONS) {
                 List<NewsItem> data = getNetworkData(sec);
                 saveToDB(sec, data);
+                if (isCancelled()) break;
                 Thread.sleep(NYTApi.TIMEOUT); //because NYT allows only one request in 5 seconds
             }
         }catch (Exception ex) {
@@ -96,7 +97,11 @@ public class UpdateTask extends AsyncTask<Object, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (!wasSkipped)
-            listener.taskComplete();
+        listener.taskComplete(wasSkipped);
+    }
+
+    @Override
+    protected void onCancelled() {
+        listener.taskComplete(true);
     }
 }

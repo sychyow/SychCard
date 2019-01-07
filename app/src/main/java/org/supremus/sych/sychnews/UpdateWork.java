@@ -2,6 +2,7 @@ package org.supremus.sych.sychnews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -16,7 +17,10 @@ public class UpdateWork extends Worker {
     @Override
     public Result doWork() {
         Context context = getApplicationContext();
-        context.startService(new Intent(context, UpdateService.class));
+        if (Build.VERSION.SDK_INT>25)
+            context.startForegroundService(new Intent(context, UpdateService.class));
+        else
+            context.startService(new Intent(context, UpdateService.class));
         return Result.success();
     }
 }
